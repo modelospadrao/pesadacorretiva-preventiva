@@ -220,6 +220,9 @@
         
         <label>ALIM:</label>
         <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+
+	<label>ENDEREÇO:</label>
+        <input type="text" id="endereco" placeholder="INSIRA ENDERECO COMPLETO">
         
         <h3>Serviço Realizado?</h3>
         <button class="button-default" onclick="toggleEditableField('servico')">Sim</button>
@@ -324,6 +327,7 @@
     msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
     msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
     msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
+    msg += `*END:* ${document.getElementById('endereco').value.toUpperCase()}\n`;		
     msg += `----------------------------------------------------\n`;
     
      
