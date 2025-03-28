@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODELO RETORNO DE CAMPO LINHA VIVA</title>
+    <style>
+        body { font-family: Cambria, Cochin, Georgia, Times, sans-serif; }
+        .container { width: 90%; margin: auto; }
+        textarea { width: 100%; height: 469px; }
+        .hidden { display: none; }
+        input[type="text"], input[type="date"], input[type="number"], .supervisor-box, .preview-text {
+            width: 100%;
+            padding: 9px;
+            margin: 6px 0;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            text-transform: uppercase; /* Adicionando caixa alta */
+            background-color: #f0f0f0;
+        }
+        .button-default {
+            border: 1px solid black;
+            padding: 8px 16px;
+            margin: 5px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .button-default:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .preview-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #f0f0f0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .clear-button {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+        /* Estilo para os botões Sim/Não */
+        .button-yes {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ddd;
+        }
+        .button-yes.selected {
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #000;
+        }
+        .button-no {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ddd;
+        }
+        .button-no.selected {
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #000;
+        }
+        input[type="tel"] {
+        width: 100%;
+        padding: 9px;
+        margin: 6px 0;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        text-transform: uppercase;
+        background-color: #f0f0f0;
+        }
+        input, select {
+        width: 100%; /* Faz com que todos os campos tenham o mesmo tamanho */
+        padding: 9px;
+        margin: 6px 0;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        text-transform: uppercase; /* Mantém padrão */
+        background-color: #f0f0f0;
+        }
+        .button-enviarWhatsApp {
+            background-color: #00b145;
+            color: white;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .button-gerarMensagem {
+            background-color: #616964;
+            color: white;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        } 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="text-align: center; font-size: 25px; font-weight: bold; color: #e63946;">MODELO RETORNO DE CAMPO<br>PESADA PREVETIVA/CORRETIVA</h2><h2 style="text-align: center; font-size: 21px; font-weight: bold; color: #000;">(Versão 1.2)</h2>
+        <!-- Campo para digitação se escolher "Outro" -->
+        <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
+        
+        <h2>Preencha os dados da execução</h2>
+        
+        <!-- Lista suspensa para o nome das pessoas -->
+        <label for="pessoa">Nome do Componete:</label>
+        <select id="pessoa" onchange="verificarOutraPessoa()">
+        <option value="NENHUM">NENHUM</option>
+        <option value="Ademar Marcos Garcia da Silva">Ademar Marcos Garcia da Silva</option>
+        <option value="Antonio Henrique Santos">Antonio Henrique Santos</option>
+        <option value="Antonio Laecio Da Silva Oliveira">Antonio Laecio Da Silva Oliveira</option>
+        <option value="Aristides Dos Santos Oliveira">Aristides Dos Santos Oliveira</option>
+        <option value="Diniz Da Silva Pinto">Diniz Da Silva Pinto</option>
+        <option value="Dirceu Miranda De Andrade">Dirceu Miranda De Andrade</option>
+        <option value="Edmilson Mendes Silva">Edmilson Mendes Silva</option>
+        <option value="Francisco Adelino Dutra de Souza">Francisco Adelino Dutra de Souza</option>
+        <option value="Francisco das chagas de Medeiros Oliveira">Francisco das chagas de Medeiros Oliveira</option>
+        <option value="Francisco Jacinto Guedes Lima">Francisco Jacinto Guedes Lima</option>
+        <option value="Francisco Werbster Perdigão Honorato">Francisco Werbster Perdigão Honorato</option>
+        <option value="Irapuam Azevedo Ferreira">Irapuam Azevedo Ferreira</option>
+        <option value="João Evangelista Pereira Barbosa">João Evangelista Pereira Barbosa</option>
+        <option value="Jonathan Costa Do Nascimento">Jonathan Costa Do Nascimento</option>
+        <option value="Jorge Luiz Nascimento dos Santos">Jorge Luiz Nascimento dos Santos</option>
+        <option value="Jose Atila Ferreira Ferreira Soares">Jose Atila Ferreira Ferreira Soares</option>
+        <option value="José Davi do Nascimento Morais">José Davi do Nascimento Morais</option>
+        <option value="José Tarcísio Da Silva Lobão">José Tarcísio Da Silva Lobão</option>
+        <option value="Márcio Ferreira Sombra">Márcio Ferreira Sombra</option>
+        <option value="Raimundo Pereira da Silva Neto">Raimundo Pereira da Silva Neto</option>
+        <option value="Roberto Cardoso da Silva">Roberto Cardoso da Silva</option>
+        <option value="Roberto Moreira Maciel">Roberto Moreira Maciel</option>
+        <option value="Vanderson da Silva Lima">Vanderson da Silva Lima</option>
+        <option value="outro">Outro</option>
+        </select>
+
+<!-- Campo para digitação se escolher "Outro" -->
+<input type="text" id="outraPessoa" class="hidden" placeholder="Digite o nome da pessoa">
+        
+        <label for="lead">LEAD:</label>
+        <select id="lead" onchange="verificarOutroLead()">
+        <option value="NENHUM">NENHUM</option>    
+        <option value="DFJ-LE-01B">DFJ-LE-01B</option>
+        <option value="DFJ-LE-02B">DFJ-LE-02B</option>
+        <option value="DFJ-LR-01B">DFJ-LR-01B</option>
+        <option value="DFJ-LR-02B">DFJ-LR-02B</option>
+        <option value="DFJ-LR-03B">DFJ-LR-03B</option>
+        <option value="DFJ-LC-01B">DFJ-LC-01B</option>
+        </select>
+
+        <!-- Campo para digitação se escolher "Outro" -->
+        <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
+        
+        <label>OT/ANE:</label>
+        <input type="tel" id="ot_ane" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+        
+        <label>SGM:</label>
+        <input type="tel" id="sgm" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+
+        <label>DATA:</label>
+        <input type="date" id="data" required>
+        
+        <label>BA:</label>
+        <input type="tel" id="ba" maxlength="8" pattern="\d*" inputmode="numeric" required title="INSIRA APENAS NÚMEROS, ATÉ 8 DIGITOS">
+        
+        <label>SGD:</label>
+        <input type="tel" id="sgd" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+        
+        <label>INC:</label>
+        <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS">
+        
+        <label>TRAFO:</label>
+        <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+        
+        <label>ESTRUTURA:</label>
+        <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+        
+        <label>ALIM:</label>
+        <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+        
+        <h3>Serviço Realizado?</h3>
+        <button class="button-default" onclick="toggleEditableField('servico')">Sim</button>
+        <button class="button-default" onclick="toggleEditableField('servico')">Não</button>
+        <div id="servico" class="hidden">
+            <label>Descrição:</label>
+            <input type="text" class="preview-text" id="descricaoServico">
+        </div>
+        
+        <h3>Material Utilizado?</h3>
+        <button class="button-default" onclick="toggleEditableField('material')">Sim</button>
+        <button class="button-default" onclick="toggleEditableField('material')">Não</button>
+        <div id="material" class="hidden">
+            <label>Descrição:</label>
+            <input type="text" class="preview-text" id="descricaoMaterial">
+        </div>
+        
+        <h3>Devolução Sucata Gerada?</h3>
+        <button class="button-default" onclick="toggleEditableField('sucata')">Sim</button>
+        <button class="button-default" onclick="toggleEditableField('sucata')">Não</button>
+        <div id="sucata" class="hidden">
+            <label>Descrição:</label>
+            <input type="text" class="preview-text" id="descricaoSucata">
+        </div>
+        
+        <h3>Necessário Outro Recurso?</h3>
+        <button class="button-default" onclick="toggleEditableField('recurso')">Sim</button>
+        <button class="button-default" onclick="toggleEditableField('recurso')">Não</button>
+        <div id="recurso" class="hidden">
+            <label>Descrição:</label>
+            <input type="text" class="preview-text" id="descricaoRecurso">
+        </div>
+        
+        <br><br>
+        <button class="button-gerarMensagem" onclick="gerarMensagem()">Gerar Mensagem</button>
+        <button class="button-default" onclick="copiarMensagem()">Copiar Mensagem</button>
+        <button class="button-enviarWhatsApp" onclick="enviarWhatsApp()">Encaminhar para WhatsApp</button>
+	<button class="clear-button" onclick="limparMensagem()">Limpar Mensagem</button>
+        
+        <br><br>
+        
+        <h3>Pré-Visualização da Mensagem</h3>
+        <div id="previewBox" class="preview-box"></div>
+        <br>
+        <br>
+    <!-- Logo da ENEL -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Enel_Group_logo.svg" alt="Logo ENEL" style="width: 193px; height: auto; display: block; margin-left: auto; margin-right: auto;">    
+</div>
+    <p style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 40px;"> © 2025 Emanuel Aguiar (Assistente Administrativo Insourcing - Enel CE)<br>Todos os direitos reservados.</p>
+      
+
+        <!-- Popup -->
+        <div id="popup">Mensagem Copiada!</div>
+    </div>
+
+<script>
+        // Impede a inserção de qualquer coisa além de números
+    document.addEventListener("DOMContentLoaded", function () {
+        const camposNumericos = ["ot_ane", "ba", "sgd", "inc"];
+        
+        camposNumericos.forEach(id => {
+            document.getElementById(id).addEventListener("input", function (e) {
+                this.value = this.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
+            });
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const camposValidos = ["traf", "estrut", "alim"];
+        
+        camposValidos.forEach(id => {
+            document.getElementById(id).addEventListener("input", function () {
+                this.value = this.value.replace(/[^a-zA-Z0-9]/g, ''); // Remove tudo que não for letra ou número
+            });
+        });
+    });    
+        // Validações e manipulações de dados
+        function toggleEditableField(field) {
+            let element = document.getElementById(field);
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+
+        // Função para formatar a data no formato brasileiro
+        function formatarData(data) {
+            const partes = data.split("-");
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+
+        function gerarMensagem() {
+    let msg = `----------------- *DADOS DA BAIXA* -----------------\n`;
+    msg += `*NOME:* ${document.getElementById('pessoa').value.toUpperCase()}\n`;        
+    msg += `*LEAD:* ${document.getElementById('lead').value.toUpperCase()}\n`;
+    msg += `*DATA:* ${formatarData(document.getElementById('data').value).toUpperCase()}\n`;
+    msg += `*OT/ANE:* ${document.getElementById('ot_ane').value.toUpperCase()}\n`;
+    msg += `*SGM:* ${document.getElementById('sgm').value.toUpperCase()}\n`;        
+    msg += `*BA:* BA${document.getElementById('ba').value.toUpperCase()}\n`;
+    msg += `*SGD:* ${document.getElementById('sgd').value.toUpperCase()}\n`;
+    msg += `*INC:* 00${document.getElementById('inc').value.toUpperCase()}\n`;
+    msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
+    msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
+    msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
+    msg += `----------------------------------------------------\n`;
+    
+     
+    if (document.getElementById('servico').classList.contains('hidden') === false) {
+        msg += `*SERVICO REALIZADO* \n${document.getElementById('descricaoServico').value.toUpperCase()}\n\n`;
+    }
+    if (document.getElementById('material').classList.contains('hidden') === false) {
+        msg += `*MATERIAL UTILIZADO* \n${document.getElementById('descricaoMaterial').value.toUpperCase()}\n\n`;
+    }
+    if (document.getElementById('sucata').classList.contains('hidden') === false) {
+        msg += `*DEVOLUÇÃO SUCATA GERADA* \n${document.getElementById('descricaoSucata').value.toUpperCase()}\n\n`;
+    }
+    if (document.getElementById('recurso').classList.contains('hidden') === false) {
+        msg += `*NECESSÁRIO OUTRO RECURSO?* \n${document.getElementById('descricaoRecurso').value.toUpperCase()}\n\n`;
+    }
+    msg += `----------------------------------------------------\n`;
+
+    // Convertendo a mensagem inteira para maiúsculas
+    document.getElementById('previewBox').textContent = msg.toUpperCase();
+        }
+        function copiarMensagem() {
+            let mensagem = document.getElementById('previewBox').textContent;
+            navigator.clipboard.writeText(mensagem).then(function() {
+                document.getElementById('popup').style.display = 'block';
+                setTimeout(() => document.getElementById('popup').style.display = 'none', 2000);
+            });
+        }
+        function limparMensagem() {
+    document.getElementById('previewBox').textContent = '';
+        }
+        function enviarWhatsApp() {
+            const mensagem = encodeURIComponent(document.getElementById('previewBox').textContent.toUpperCase()); // Convertendo para maiúsculas ao enviar
+            const url = `https://wa.me/?text=${mensagem}`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
