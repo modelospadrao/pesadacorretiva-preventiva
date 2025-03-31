@@ -144,7 +144,7 @@
     
     <!-- Popup de Notificação para Não -->
     <div id="no-notification-popup" class="popup">
-        <p>Edição cancelada.</p>
+        <p>Edição cancelada!</p>
     </div>
     
     <!-- Popups adicionais para ações -->
@@ -306,6 +306,8 @@
             <button class="button-enviarWhatsApp" onclick="enviarWhatsApp(); document.getElementById('encaminhar-popup').style.display='block';">Encaminhar para WhatsApp</button>
             <button class="clear-button" onclick="limparMensagem(); document.getElementById('limpar-popup').style.display='block';">Limpar Mensagem</button>
             
+            <button id="pdfButton" class="button-default" onclick="savePdf()">Salvar PDF</button>
+            
             <br><br>
             
             <h3>Pré-Visualização da Mensagem</h3>
@@ -326,8 +328,6 @@
     <!-- Botões adicionais para Reiniciar e Salvar PDF -->
     <div class="container" style="text-align: center; margin-top: 20px;">
         <button style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 10px;"  id="reset-button" onclick="resetSprint()">REINICIAR SPRINT!</button>
-
-        <button id="pdfButton" class="button-default" onclick="savePdf()">Salvar PDF</button>
     </div>
     
     <script>
