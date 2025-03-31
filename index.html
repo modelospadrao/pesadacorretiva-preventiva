@@ -144,7 +144,7 @@
     
     <!-- Popup de Notificação para Não -->
     <div id="no-notification-popup" class="popup">
-        <p>Para iniciar outro preenchimento, por favor, reinicie a página usando o botão "Reiniciar".</p>
+        <p>Edição cancelada.</p>
     </div>
     
     <!-- Popups adicionais para ações -->
@@ -325,7 +325,8 @@
     
     <!-- Botões adicionais para Reiniciar e Salvar PDF -->
     <div class="container" style="text-align: center; margin-top: 20px;">
-        <button id="reset-button" onclick="resetSprint()">Reiniciar</button>
+        <button style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 10px;"  id="reset-button" onclick="resetSprint()">REINICIAR SPRINT!</button>
+
         <button id="pdfButton" class="button-default" onclick="savePdf()">Salvar PDF</button>
     </div>
     
@@ -428,7 +429,7 @@
             document.getElementById('no-notification-popup').style.display = 'block';
             setTimeout(function() {
                 document.getElementById('no-notification-popup').style.display = 'none';
-            }, 3000);
+            }, 5000);
             // Mantém os campos desabilitados e ativa o overlay para interceptar cliques
             document.getElementById('clickOverlay').style.display = 'block';
         }
