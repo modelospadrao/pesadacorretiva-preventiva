@@ -130,7 +130,7 @@
     
     <!-- Popup de Boas-Vindas -->
     <div id="welcome-popup" class="popup">
-        <p>Bem-vindo! Deseja iniciar os sprints?</p>
+        <p>Bem-vindo! Deseja iniciar?</p>
         <div class="popup-buttons">
             <button class="button-yes" onclick="startSprint()">Sim</button>
             <button class="button-no" onclick="handleNoSprint()">Não</button>
@@ -139,12 +139,12 @@
     
     <!-- Popup de Notificação para Sim -->
     <div id="yes-notification-popup" class="popup">
-        <p>O sprint iniciará agora. O contador de tempo foi ativado.</p>
+        <p>O campos estão liberados para edição. O contador de tempo foi ativado.</p>
     </div>
     
     <!-- Popup de Notificação para Não -->
     <div id="no-notification-popup" class="popup">
-        <p>Para iniciar os sprints, por favor, reinicie a página usando o botão "Reiniciar Sprint".</p>
+        <p>Para iniciar outro preenchimento, por favor, reinicie a página usando o botão "Reiniciar".</p>
     </div>
     
     <!-- Popups adicionais para ações -->
@@ -167,7 +167,7 @@
     <!-- Popup que aparece ao clicar no overlay -->
     <div id="body-popup" onclick="this.style.display='none'; event.stopPropagation();">
         ⚠️ ATENÇÃO: Todos os campos estão bloqueados!<br>
-        Reinicie a página utilizando o botão "Reiniciar Sprint".
+        Reinicie a página utilizando o botão "Reiniciar".
     </div>
     
     <div class="container">
@@ -325,7 +325,7 @@
     
     <!-- Botões adicionais para Reiniciar e Salvar PDF -->
     <div class="container" style="text-align: center; margin-top: 20px;">
-        <button id="reset-button" onclick="resetSprint()">Reiniciar Sprint</button>
+        <button id="reset-button" onclick="resetSprint()">Reiniciar</button>
         <button id="pdfButton" class="button-default" onclick="savePdf()">Salvar PDF</button>
     </div>
     
