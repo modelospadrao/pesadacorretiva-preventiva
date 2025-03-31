@@ -4,349 +4,477 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MODELO RETORNO DE CAMPO PESADA PREVETIVA/CORRETIVA</title>
+    <!-- Importa a biblioteca html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <style>
-        body { font-family: Cambria, Cochin, Georgia, Times, sans-serif; }
+        /* Estilos Gerais e do Formulário */
+        body { font-family: Cambria, Cochin, Georgia, Times, sans-serif; overscroll-behavior-y: none; }
         .container { width: 90%; margin: auto; }
         textarea { width: 100%; height: 469px; }
         .hidden { display: none; }
         input[type="text"], input[type="date"], input[type="number"], .supervisor-box, .preview-text {
-            width: 100%;
-            padding: 9px;
-            margin: 6px 0;
-            font-size: 14px;
-            border: 1px solid #ddd;
-            text-transform: uppercase; /* Adicionando caixa alta */
-            background-color: #f0f0f0;
+            width: 100%; padding: 9px; margin: 6px 0;
+            font-size: 14px; border: 1px solid #ddd;
+            text-transform: uppercase; background-color: #f0f0f0;
         }
+        input[type="tel"], select, input {
+            width: 100%; padding: 9px; margin: 6px 0;
+            font-size: 14px; border: 1px solid #ddd;
+            text-transform: uppercase; background-color: #f0f0f0;
+        }
+        /* Botões do formulário */
         .button-default {
-            border: 1px solid black;
-            padding: 8px 16px;
-            margin: 5px;
-            background-color: #fff;
-            cursor: pointer;
-            font-size: 14px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid black; padding: 8px 16px; margin: 5px;
+            background-color: #fff; cursor: pointer; font-size: 14px;
+            border-radius: 4px; transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
-        .button-default:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        .button-default.selected {
+            background-color: #000; color: #fff; border: 1px solid #000;
         }
-        .preview-box {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-top: 20px;
-            background-color: #f0f0f0;
-            white-space: pre-wrap;
-            font-family: monospace;
-            font-size: 14px;
-        }
-        .clear-button {
-            background-color: #f44336;
-            color: white;
-            padding: 8px 16px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        #popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            z-index: 1000;
-        }
-        /* Estilo para os botões Sim/Não */
-        .button-yes {
-            background-color: #fff;
-            color: #000;
-            border: 1px solid #ddd;
-        }
-        .button-yes.selected {
-            background-color: #000;
-            color: #fff;
-            border: 1px solid #000;
-        }
-        .button-no {
-            background-color: #fff;
-            color: #000;
-            border: 1px solid #ddd;
-        }
-        .button-no.selected {
-            background-color: #000;
-            color: #fff;
-            border: 1px solid #000;
-        }
-        input[type="tel"] {
-        width: 100%;
-        padding: 9px;
-        margin: 6px 0;
-        font-size: 14px;
-        border: 1px solid #ddd;
-        text-transform: uppercase;
-        background-color: #f0f0f0;
-        }
-        input, select {
-        width: 100%; /* Faz com que todos os campos tenham o mesmo tamanho */
-        padding: 9px;
-        margin: 6px 0;
-        font-size: 14px;
-        border: 1px solid #ddd;
-        text-transform: uppercase; /* Mantém padrão */
-        background-color: #f0f0f0;
+        .button-default:hover { box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+        .button-gerarMensagem {
+            background-color: #616964; color: white; padding: 8px 16px; margin: 5px;
+            cursor: pointer; font-size: 14px; border-radius: 4px;
+            transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
         .button-enviarWhatsApp {
-            background-color: #00b145;
-            color: white;
-            padding: 8px 16px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            background-color: #00b145; color: white; padding: 8px 16px; margin: 5px;
+            cursor: pointer; font-size: 14px; border-radius: 4px;
+            transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
-        .button-gerarMensagem {
-            background-color: #616964;
-            color: white;
-            padding: 8px 16px;
-            margin: 5px;
+        .clear-button {
+            background-color: #f44336; color: white; padding: 8px 16px; margin: 5px;
+            cursor: pointer; font-size: 14px; border-radius: 4px;
+            transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .preview-box {
+            border: 1px solid #ddd; padding: 10px; margin-top: 20px;
+            background-color: #f0f0f0; white-space: pre-wrap;
+            font-family: monospace; font-size: 14px;
+        }
+        /* Botões Sim/Não do toggle */
+        .button-yes {
+            background-color: #4CAF50; color: white; border: 1px solid #4CAF50;
+            padding: 8px 16px; font-size: 14px; border-radius: 4px;
+            cursor: pointer; margin: 0 5px;
+        }
+        .button-yes.selected {
+            background-color: #000; color: #fff; border: 1px solid #000;
+        }
+        .button-no {
+            background-color: #ff0000; color: #ffffff; border: 1px solid #ddd;
+            padding: 8px 16px; font-size: 14px; border-radius: 4px;
+            cursor: pointer; margin: 0 5px;
+        }
+        .button-no.selected {
+            background-color: #000; color: #fff; border: 1px solid #000;
+        }
+        /* Global Clock */
+        #global-clock {
+            position: fixed; top: 10px; left: 10px;
+            font-size: 24px; font-family: 'Courier New', Courier, monospace;
+            color: #fff; background-color: #000; padding: 10px;
+            border-radius: 8px; z-index: 1001; display: none;
+        }
+        /* Popups padrão (Boas-vindas, notificações, cópia) */
+        .popup {
+            display: none; position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px; background-color: rgba(0,0,0,0.8);
+            color: white; font-size: 16px; border-radius: 5px;
+            z-index: 1000; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .popup-buttons {
+            display: flex; justify-content: space-around; margin-top: 10px;
+        }
+        .popup-buttons button {
+            padding: 8px 16px; font-size: 14px; border-radius: 4px;
+            cursor: pointer; border: none;
+        }
+        /* Overlay que intercepta cliques se a BAIXA não for iniciada */
+        #clickOverlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: transparent; z-index: 2000;
+            display: none;
+        }
+        /* Popup que aparece ao clicar no overlay */
+        #body-popup {
+            display: none; position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.85);
+            color: #fff; padding: 15px 20px;
+            border-radius: 8px; z-index: 2500; font-size: 18px;
             cursor: pointer;
-            font-size: 14px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        } 
+        }
+        /* Botão Reiniciar Sprint: garantir que fique acima do overlay */
+        #reset-button {
+            border: 1px solid black; padding: 8px 16px;
+            background-color: #f44336; color: white; cursor: pointer;
+            font-size: 14px; border-radius: 4px; margin: 10px;
+            display: block; width: fit-content; margin-left: auto; margin-right: auto;
+            position: relative; z-index: 3000;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2 style="text-align: center; font-size: 25px; font-weight: bold; color: #e63946;">MODELO RETORNO DE CAMPO<br>PESADA PREVETIVA/CORRETIVA</h2><h2 style="text-align: center; font-size: 21px; font-weight: bold; color: #000;">(Versão 1.2)</h2>
-        <!-- Campo para digitação se escolher "Outro" -->
-        <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
-        
-        <h2>Preencha os dados da execução</h2>
-        
-        <!-- Lista suspensa para o nome das pessoas -->
-        <label for="pessoa">Nome do Componete:</label>
-        <select id="pessoa" onchange="verificarOutraPessoa()">
-        <option value="NENHUM">NENHUM</option>
-        <option value="Agenor Alves Da Silva">Agenor Alves Da Silva</option>
-        <option value="Antonio Marcos Martins Temoteo">Antonio Marcos Martins Temoteo</option>
-        <option value="Carlos Augusto de Sousa">Carlos Augusto de Sousa</option>
-        <option value="Francisco Iranildo Da Penha">Francisco Iranildo Da Penha</option>
-        <option value="Francisco Vladimir Da Silva Lima">Francisco Vladimir Da Silva Lima</option>
-        <option value="Jean Cleyster Cavalcante Lima">Jean Cleyster Cavalcante Lima</option>
-        <option value="Jefferson Wendel Arruda Barbosa">Jefferson Wendel Arruda Barbosa</option>
-        <option value="Luiz Eduardo Fernandes Do Nascimento">Luiz Eduardo Fernandes Do Nascimento</option>
-        </select>
-
-<!-- Campo para digitação se escolher "Outro" -->
-<input type="text" id="outraPessoa" class="hidden" placeholder="Digite o nome da pessoa">
-        
-        <label for="lead">LEAD:</label>
-        <select id="lead" onchange="verificarOutroLead()">
-        <option value="NENHUM">NENHUM</option>    
-        <option value="DFD-EP-31D">DFD-EP-31D</option>
-        <option value="DFD-EP-32D">DFD-EP-32D</option>
-        <option value="DFD-EP-33D">DFD-EP-33D</option>
-        <option value="DFD-EP-34D">DFD-EP-34D</option>
-        <option value="DFD-EP-35D">DFD-EP-35D</option>
-        <option value="DFD-EP-36D">DFD-EP-36D</option>
-        <option value="DFD-EP-37D">DFD-EP-37D</option>
-        <option value="DFD-EP-38D">DFD-EP-38D</option>
-        <option value="DFD-EP-39D">DFD-EP-39D</option>
-        <option value="DFD-EP-40D">DFD-EP-40D</option>
-        <option value="DFD-EP-61B">DFD-EP-61B</option>
-        <option value="DFD-EP-62B">DFD-EP-62B</option>
-        <option value="DFD-EP-63B">DFD-EP-63B</option>
-        <option value="DFD-EP-64B">DFD-EP-64B</option>
-        <option value="DFD-EP-65B">DFD-EP-65B</option>
-        <option value="DFJ-EP-01B">DFJ-EP-01B</option>
-        <option value="DFJ-EP-01D">DFJ-EP-01D</option>
-        <option value="DFJ-EP-02B">DFJ-EP-02B</option>
-        <option value="DFJ-EP-02D">DFJ-EP-02D</option>
-        <option value="DFJ-EP-32D">DFJ-EP-32D</option>
-        <option value="DFJ-EP-33D">DFJ-EP-33D</option>
-        <option value="DFJ-EP-34D">DFJ-EP-34D</option>
-        <option value="DFJ-EP-35D">DFJ-EP-35D</option>
-        <option value="DFJ-EP-36D">DFJ-EP-36D</option>
-        <option value="DFJ-EP-37D">DFJ-EP-37D</option>
-        <option value="DFJ-EP-38D">DFJ-EP-38D</option>
-        <option value="DFJ-EP-39D">DFJ-EP-39D</option>
-        <option value="DFJ-EP-40D">DFJ-EP-40D</option>
-        <option value="DFJ-EP-61B">DFJ-EP-61B</option>
-        <option value="DFJ-EP-62B">DFJ-EP-62B</option>
-        <option value="DFJ-EP-63B">DFJ-EP-63B</option>
-        <option value="DFJ-EP-64B">DFJ-EP-64B</option>
-        <option value="DFJ-EP-65B">DFJ-EP-65B</option>
-        </select>
-
-        <!-- Campo para digitação se escolher "Outro" -->
-        <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
-        
-        <label>OT/ANE:</label>
-        <input type="tel" id="ot_ane" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
-        
-        <label>SGM:</label>
-        <input type="tel" id="sgm" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
-
-        <label>DATA:</label>
-        <input type="date" id="data" required>
-        
-        <label>BA:</label>
-        <input type="tel" id="ba" maxlength="8" pattern="\d*" inputmode="numeric" required title="INSIRA APENAS NÚMEROS, ATÉ 8 DIGITOS">
-        
-        <label>SGD:</label>
-        <input type="tel" id="sgd" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
-        
-        <label>INC:</label>
-        <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS">
-        
-        <label>TRAFO:</label>
-        <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
-        
-        <label>ESTRUTURA:</label>
-        <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
-        
-        <label>ALIM:</label>
-        <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
-
-	<label>ENDEREÇO:</label>
-        <input type="text" id="endereco" placeholder="INSIRA ENDERECO COMPLETO">
-        
-        <h3>Serviço Realizado?</h3>
-        <button class="button-default" onclick="toggleEditableField('servico')">Sim</button>
-        <button class="button-default" onclick="toggleEditableField('servico')">Não</button>
-        <div id="servico" class="hidden">
-            <label>Descrição:</label>
-            <input type="text" class="preview-text" id="descricaoServico">
+    <!-- Overlay que intercepta cliques em toda a página se a BAIXA não for iniciada -->
+    <div id="clickOverlay"></div>
+    
+    <!-- Global Clock -->
+    <div id="global-clock"></div>
+    
+    <!-- Popup de Boas-Vindas -->
+    <div id="welcome-popup" class="popup">
+        <p>Bem-vindo! Deseja iniciar os sprints?</p>
+        <div class="popup-buttons">
+            <button class="button-yes" onclick="startSprint()">Sim</button>
+            <button class="button-no" onclick="handleNoSprint()">Não</button>
         </div>
-        
-        <h3>Material Utilizado?</h3>
-        <button class="button-default" onclick="toggleEditableField('material')">Sim</button>
-        <button class="button-default" onclick="toggleEditableField('material')">Não</button>
-        <div id="material" class="hidden">
-            <label>Descrição:</label>
-            <input type="text" class="preview-text" id="descricaoMaterial">
-        </div>
-        
-        <h3>Devolução Sucata Gerada?</h3>
-        <button class="button-default" onclick="toggleEditableField('sucata')">Sim</button>
-        <button class="button-default" onclick="toggleEditableField('sucata')">Não</button>
-        <div id="sucata" class="hidden">
-            <label>Descrição:</label>
-            <input type="text" class="preview-text" id="descricaoSucata">
-        </div>
-        
-        <h3>Necessário Outro Recurso?</h3>
-        <button class="button-default" onclick="toggleEditableField('recurso')">Sim</button>
-        <button class="button-default" onclick="toggleEditableField('recurso')">Não</button>
-        <div id="recurso" class="hidden">
-            <label>Descrição:</label>
-            <input type="text" class="preview-text" id="descricaoRecurso">
-        </div>
-        
-        <br><br>
-        <button class="button-gerarMensagem" onclick="gerarMensagem()">Gerar Mensagem</button>
-        <button class="button-default" onclick="copiarMensagem()">Copiar Mensagem</button>
-        <button class="button-enviarWhatsApp" onclick="enviarWhatsApp()">Encaminhar para WhatsApp</button>
-	<button class="clear-button" onclick="limparMensagem()">Limpar Mensagem</button>
-        
-        <br><br>
-        
-        <h3>Pré-Visualização da Mensagem</h3>
-        <div id="previewBox" class="preview-box"></div>
-        <br>
-        <br>
-    <!-- Logo da ENEL -->
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Enel_Group_logo.svg" alt="Logo ENEL" style="width: 193px; height: auto; display: block; margin-left: auto; margin-right: auto;">    
-</div>
-    <p style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 40px;"> © 2025 Emanuel Aguiar (Assistente Administrativo Insourcing - Enel CE)<br>Todos os direitos reservados.</p>
-      
-
-        <!-- Popup -->
-        <div id="popup">Mensagem Copiada!</div>
     </div>
-
-<script>
-        // Impede a inserção de qualquer coisa além de números
-    document.addEventListener("DOMContentLoaded", function () {
-        const camposNumericos = ["ot_ane", "ba", "sgd", "inc"];
+    
+    <!-- Popup de Notificação para Sim -->
+    <div id="yes-notification-popup" class="popup">
+        <p>O sprint iniciará agora. O contador de tempo foi ativado.</p>
+    </div>
+    
+    <!-- Popup de Notificação para Não -->
+    <div id="no-notification-popup" class="popup">
+        <p>Para iniciar os sprints, por favor, reinicie a página usando o botão "Reiniciar Sprint".</p>
+    </div>
+    
+    <!-- Popups adicionais para ações -->
+    <div id="gerar-popup" class="popup">
+        <p>Mensagem Gerada!</p>
+        <button onclick="document.getElementById('gerar-popup').style.display='none'">Fechar</button>
+    </div>
+    <div id="limpar-popup" class="popup">
+        <p>Mensagem limpa com sucesso!</p>
+        <button onclick="document.getElementById('limpar-popup').style.display='none'">Fechar</button>
+    </div>
+    <div id="encaminhar-popup" class="popup">
+        <p>Mensagem encaminhada com sucesso!</p>
+        <button onclick="document.getElementById('encaminhar-popup').style.display='none'">Fechar</button>
+    </div>
+    
+    <!-- Popup para confirmação de cópia -->
+    <div id="popup" class="popup">Mensagem Copiada!</div>
+    
+    <!-- Popup que aparece ao clicar no overlay -->
+    <div id="body-popup" onclick="this.style.display='none'; event.stopPropagation();">
+        ⚠️ ATENÇÃO: Todos os campos estão bloqueados!<br>
+        Reinicie a página utilizando o botão "Reiniciar Sprint".
+    </div>
+    
+    <div class="container">
+        <h2 style="text-align: center; font-size: 25px; font-weight: bold; color: #e63946;">MODELO RETORNO DE CAMPO<br>PESADA PREVETIVA/CORRETIVA</h2>
+        <h2 style="text-align: center; font-size: 21px; font-weight: bold; color: #000;">(Versão 2.0)</h2>
         
-        camposNumericos.forEach(id => {
-            document.getElementById(id).addEventListener("input", function (e) {
-                this.value = this.value.replace(/\D/g, ''); // Remove qualquer caractere que não seja número
+        <!-- Agrupamento dos campos do formulário -->
+        <div id="formFields">
+            <!-- Campo para digitação se escolher "Outro" -->
+            <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
+            
+            <h2>Preencha os dados da execução</h2>
+            
+            <!-- Lista suspensa para o nome das pessoas -->
+            <label for="pessoa">Nome do Componete:</label>
+            <select id="pessoa" onchange="verificarOutraPessoa()">
+                <option value="NENHUM">NENHUM</option>
+                <option value="Agenor Alves Da Silva">Agenor Alves Da Silva</option>
+                <option value="Antonio Marcos Martins Temoteo">Antonio Marcos Martins Temoteo</option>
+                <option value="Carlos Augusto de Sousa">Carlos Augusto de Sousa</option>
+                <option value="Francisco Iranildo Da Penha">Francisco Iranildo Da Penha</option>
+                <option value="Francisco Vladimir Da Silva Lima">Francisco Vladimir Da Silva Lima</option>
+                <option value="Jean Cleyster Cavalcante Lima">Jean Cleyster Cavalcante Lima</option>
+                <option value="Jefferson Wendel Arruda Barbosa">Jefferson Wendel Arruda Barbosa</option>
+                <option value="Luiz Eduardo Fernandes Do Nascimento">Luiz Eduardo Fernandes Do Nascimento</option>
+            </select>
+            <!-- Campo para digitação se escolher "Outro" -->
+            <input type="text" id="outraPessoa" class="hidden" placeholder="Digite o nome da pessoa">
+            
+            <label for="lead">LEAD:</label>
+            <select id="lead" onchange="verificarOutroLead()">
+                <option value="NENHUM">NENHUM</option>    
+                <option value="DFD-EP-31D">DFD-EP-31D</option>
+                <option value="DFD-EP-32D">DFD-EP-32D</option>
+                <option value="DFD-EP-33D">DFD-EP-33D</option>
+                <option value="DFD-EP-34D">DFD-EP-34D</option>
+                <option value="DFD-EP-35D">DFD-EP-35D</option>
+                <option value="DFD-EP-36D">DFD-EP-36D</option>
+                <option value="DFD-EP-37D">DFD-EP-37D</option>
+                <option value="DFD-EP-38D">DFD-EP-38D</option>
+                <option value="DFD-EP-39D">DFD-EP-39D</option>
+                <option value="DFD-EP-40D">DFD-EP-40D</option>
+                <option value="DFD-EP-61B">DFD-EP-61B</option>
+                <option value="DFD-EP-62B">DFD-EP-62B</option>
+                <option value="DFD-EP-63B">DFD-EP-63B</option>
+                <option value="DFD-EP-64B">DFD-EP-64B</option>
+                <option value="DFD-EP-65B">DFD-EP-65B</option>
+                <option value="DFJ-EP-01B">DFJ-EP-01B</option>
+                <option value="DFJ-EP-01D">DFJ-EP-01D</option>
+                <option value="DFJ-EP-02B">DFJ-EP-02B</option>
+                <option value="DFJ-EP-02D">DFJ-EP-02D</option>
+                <option value="DFJ-EP-32D">DFJ-EP-32D</option>
+                <option value="DFJ-EP-33D">DFJ-EP-33D</option>
+                <option value="DFJ-EP-34D">DFJ-EP-34D</option>
+                <option value="DFJ-EP-35D">DFJ-EP-35D</option>
+                <option value="DFJ-EP-36D">DFJ-EP-36D</option>
+                <option value="DFJ-EP-37D">DFJ-EP-37D</option>
+                <option value="DFJ-EP-38D">DFJ-EP-38D</option>
+                <option value="DFJ-EP-39D">DFJ-EP-39D</option>
+                <option value="DFJ-EP-40D">DFJ-EP-40D</option>
+                <option value="DFJ-EP-61B">DFJ-EP-61B</option>
+                <option value="DFJ-EP-62B">DFJ-EP-62B</option>
+                <option value="DFJ-EP-63B">DFJ-EP-63B</option>
+                <option value="DFJ-EP-64B">DFJ-EP-64B</option>
+                <option value="DFJ-EP-65B">DFJ-EP-65B</option>
+            </select>
+            <!-- Campo para digitação se escolher "Outro" -->
+            <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
+            
+            <label>OT/ANE:</label>
+            <input type="tel" id="ot_ane" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+            
+            <label>SGM:</label>
+            <input type="tel" id="sgm" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+                    
+            <label>DATA:</label>
+            <input type="date" id="data" required>
+            
+            <label>BA:</label>
+            <input type="tel" id="ba" maxlength="8" pattern="\d*" inputmode="numeric" required title="INSIRA APENAS NÚMEROS, ATÉ 8 DIGITOS">
+            
+            <label>SGD:</label>
+            <input type="tel" id="sgd" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+            
+            <label>INC:</label>
+            <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS">
+            
+            <label>TRAFO:</label>
+            <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+            
+            <label>ESTRUTURA:</label>
+            <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+            
+            <label>ALIM:</label>
+            <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+        
+            <label>ENDEREÇO:</label>
+            <input type="text" id="endereco" placeholder="INSIRA ENDERECO COMPLETO">
+            
+            <h3>Serviço Realizado?</h3>
+            <button class="button-default" data-field="servico" onclick="toggleEditableField('servico', 'sim', this)">Sim</button>
+            <button class="button-default" data-field="servico" onclick="toggleEditableField('servico', 'nao', this)">Não</button>
+            <div id="servico" class="hidden">
+                <label>Descrição:</label>
+                <input type="text" class="preview-text" id="descricaoServico">
+            </div>
+            
+            <h3>Material Utilizado?</h3>
+            <button class="button-default" data-field="material" onclick="toggleEditableField('material', 'sim', this)">Sim</button>
+            <button class="button-default" data-field="material" onclick="toggleEditableField('material', 'nao', this)">Não</button>
+            <div id="material" class="hidden">
+                <label>Descrição:</label>
+                <input type="text" class="preview-text" id="descricaoMaterial">
+            </div>
+            
+            <h3>Devolução Sucata Gerada?</h3>
+            <button class="button-default" data-field="sucata" onclick="toggleEditableField('sucata', 'sim', this)">Sim</button>
+            <button class="button-default" data-field="sucata" onclick="toggleEditableField('sucata', 'nao', this)">Não</button>
+            <div id="sucata" class="hidden">
+                <label>Descrição:</label>
+                <input type="text" class="preview-text" id="descricaoSucata">
+            </div>
+            
+            <h3>Necessário Outro Recurso?</h3>
+            <button class="button-default" data-field="recurso" onclick="toggleEditableField('recurso', 'sim', this)">Sim</button>
+            <button class="button-default" data-field="recurso" onclick="toggleEditableField('recurso', 'nao', this)">Não</button>
+            <div id="recurso" class="hidden">
+                <label>Descrição:</label>
+                <input type="text" class="preview-text" id="descricaoRecurso">
+            </div>
+            
+            <br><br>
+            
+            <button class="button-gerarMensagem" onclick="gerarMensagem(); document.getElementById('gerar-popup').style.display='block';">Gerar Mensagem</button>
+            <button class="button-default" onclick="copiarMensagem()">Copiar Mensagem</button>
+            <button class="button-enviarWhatsApp" onclick="enviarWhatsApp(); document.getElementById('encaminhar-popup').style.display='block';">Encaminhar para WhatsApp</button>
+            <button class="clear-button" onclick="limparMensagem(); document.getElementById('limpar-popup').style.display='block';">Limpar Mensagem</button>
+            
+            <br><br>
+            
+            <h3>Pré-Visualização da Mensagem</h3>
+            <div id="previewBox" class="preview-box"></div>
+            <br><br>
+            <!-- Logo da ENEL -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Enel_Group_logo.svg" alt="Logo ENEL" style="width: 193px; height: auto; display: block; margin-left: auto; margin-right: auto;">    
+        </div>
+    </div>
+    <p style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 40px;">
+        © 2025 Emanuel Aguiar (Assistente Administrativo Insourcing - Enel CE)<br>
+        Todos os direitos reservados.
+    </p>
+    
+    <!-- Popup para confirmação de cópia -->
+    <div id="popup" class="popup">Mensagem Copiada!</div>
+    
+    <!-- Botões adicionais para Reiniciar e Salvar PDF -->
+    <div class="container" style="text-align: center; margin-top: 20px;">
+        <button id="reset-button" onclick="resetSprint()">Reiniciar Sprint</button>
+        <button id="pdfButton" class="button-default" onclick="savePdf()">Salvar PDF</button>
+    </div>
+    
+    <script>
+        // --- Funções já existentes (validação, toggle) ---
+        document.addEventListener("DOMContentLoaded", function () {
+            const camposNumericos = ["ot_ane", "ba", "sgd", "inc"];
+            camposNumericos.forEach(id => {
+                document.getElementById(id).addEventListener("input", function () {
+                    this.value = this.value.replace(/\D/g, '');
+                });
             });
         });
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-        const camposValidos = ["traf", "estrut", "alim"];
-        
-        camposValidos.forEach(id => {
-            document.getElementById(id).addEventListener("input", function () {
-                this.value = this.value.replace(/[^a-zA-Z0-9]/g, ''); // Remove tudo que não for letra ou número
+        document.addEventListener("DOMContentLoaded", function () {
+            const camposValidos = ["traf", "estrut", "alim"];
+            camposValidos.forEach(id => {
+                document.getElementById(id).addEventListener("input", function () {
+                    this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
+                });
             });
         });
-    });    
-        // Validações e manipulações de dados
-        function toggleEditableField(field) {
-            let element = document.getElementById(field);
-            if (element.classList.contains('hidden')) {
-                element.classList.remove('hidden');
+        function toggleEditableField(field, choice, btn) {
+            const container = document.getElementById(field);
+            if (choice === 'sim') {
+                container.classList.remove('hidden');
             } else {
-                element.classList.add('hidden');
+                container.classList.add('hidden');
             }
+            const buttons = document.querySelectorAll("button[data-field='" + field + "']");
+            buttons.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
         }
-
-        // Função para formatar a data no formato brasileiro
         function formatarData(data) {
             const partes = data.split("-");
             return `${partes[2]}/${partes[1]}/${partes[0]}`;
         }
-
+        // --- Funções para habilitar/desabilitar os campos do formulário ---
+        function disableFields() {
+            const formFields = document.getElementById("formFields");
+            const fields = formFields.querySelectorAll("input, select, textarea, button");
+            fields.forEach(field => { field.disabled = true; });
+        }
+        function enableFields() {
+            const formFields = document.getElementById("formFields");
+            const fields = formFields.querySelectorAll("input, select, textarea, button");
+            fields.forEach(field => { field.disabled = false; });
+        }
+        // --- Funções do temporizador e PDF ---
+        let globalTimerStart = null;
+        let globalTimerInterval = null;
+        let pdfSaved = false;
+        function formatTime(totalSeconds) {
+            let minutes = Math.floor(totalSeconds / 60);
+            let seconds = totalSeconds % 60;
+            let result = "";
+            if (minutes > 0) {
+                result += minutes + (minutes === 1 ? " minuto" : " minutos");
+                if (seconds > 0) result += " e " + seconds + (seconds === 1 ? " segundo" : " segundos");
+            } else {
+                result += seconds + (seconds === 1 ? " segundo" : " segundos");
+            }
+            return result;
+        }
+        function formatFullDateTime(date) {
+            const meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+            let dia = date.getDate();
+            let mes = meses[date.getMonth()];
+            let ano = date.getFullYear();
+            let horas = date.getHours();
+            let minutos = date.getMinutes();
+            let segundos = date.getSeconds();
+            mes = mes.charAt(0).toUpperCase() + mes.slice(1);
+            let strHoras = `${horas} ${horas === 1 ? "hora" : "horas"}`;
+            let strMinutos = `${minutos} ${minutos === 1 ? "minuto" : "minutos"}`;
+            let strSegundos = `${segundos} ${segundos === 1 ? "segundo" : "segundos"}`;
+            return `${dia} de ${mes} de ${ano} às ${strHoras} e ${strMinutos} e ${strSegundos}`;
+        }
+        // --- Função para iniciar o sprint ---
+        function startSprint() {
+            document.getElementById('welcome-popup').style.display = 'none';
+            document.getElementById('global-clock').style.display = 'block';
+            globalTimerStart = Date.now();
+            globalTimerInterval = setInterval(function() {
+                let totalSeconds = Math.floor((Date.now() - globalTimerStart) / 1000);
+                document.getElementById('global-clock').textContent = formatTime(totalSeconds);
+            }, 1000);
+            document.getElementById('yes-notification-popup').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('yes-notification-popup').style.display = 'none';
+            }, 3000);
+            // Habilita os campos do formulário
+            enableFields();
+            // Oculta o overlay e o popup de bloqueio
+            document.getElementById('clickOverlay').style.display = 'none';
+            document.getElementById('body-popup').style.display = 'none';
+        }
+        // --- Função para tratar o clique em "Não" ---
+        function handleNoSprint() {
+            document.getElementById('welcome-popup').style.display = 'none';
+            document.getElementById('no-notification-popup').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('no-notification-popup').style.display = 'none';
+            }, 3000);
+            // Mantém os campos desabilitados e ativa o overlay para interceptar cliques
+            document.getElementById('clickOverlay').style.display = 'block';
+        }
+        // --- Função para reiniciar o sprint (recarrega a página) ---
+        function resetSprint() {
+            window.location.reload();
+        }
+        // --- Modificação na função gerarMensagem ---
         function gerarMensagem() {
-    let msg = `----------------- *DADOS DA BAIXA* -----------------\n`;
-    msg += `*NOME:* ${document.getElementById('pessoa').value.toUpperCase()}\n`;        
-    msg += `*LEAD:* ${document.getElementById('lead').value.toUpperCase()}\n`;
-    msg += `*DATA:* ${formatarData(document.getElementById('data').value).toUpperCase()}\n`;
-    msg += `*OT/ANE:* ${document.getElementById('ot_ane').value.toUpperCase()}\n`;
-    msg += `*SGM:* ${document.getElementById('sgm').value.toUpperCase()}\n`;        
-    msg += `*BA:* BA${document.getElementById('ba').value.toUpperCase()}\n`;
-    msg += `*SGD:* ${document.getElementById('sgd').value.toUpperCase()}\n`;
-    msg += `*INC:* 00${document.getElementById('inc').value.toUpperCase()}\n`;
-    msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
-    msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
-    msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
-    msg += `*END:* ${document.getElementById('endereco').value.toUpperCase()}\n`;		
-    msg += `----------------------------------------------------\n`;
-    
-     
-    if (document.getElementById('servico').classList.contains('hidden') === false) {
-        msg += `*SERVICO REALIZADO* \n${document.getElementById('descricaoServico').value.toUpperCase()}\n\n`;
-    }
-    if (document.getElementById('material').classList.contains('hidden') === false) {
-        msg += `*MATERIAL UTILIZADO* \n${document.getElementById('descricaoMaterial').value.toUpperCase()}\n\n`;
-    }
-    if (document.getElementById('sucata').classList.contains('hidden') === false) {
-        msg += `*DEVOLUÇÃO SUCATA GERADA* \n${document.getElementById('descricaoSucata').value.toUpperCase()}\n\n`;
-    }
-    if (document.getElementById('recurso').classList.contains('hidden') === false) {
-        msg += `*NECESSÁRIO OUTRO RECURSO?* \n${document.getElementById('descricaoRecurso').value.toUpperCase()}\n\n`;
-    }
-    msg += `----------------------------------------------------\n`;
-
-    // Convertendo a mensagem inteira para maiúsculas
-    document.getElementById('previewBox').textContent = msg.toUpperCase();
+            let msg = `----------------- *DADOS DA BAIXA* -----------------\n`;
+            msg += `*NOME:* ${document.getElementById('pessoa').value.toUpperCase()}\n`;
+            msg += `*LEAD:* ${document.getElementById('lead').value.toUpperCase()}\n`;
+            msg += `*DATA:* ${formatarData(document.getElementById('data').value).toUpperCase()}\n`;
+            msg += `*OT/ANE:* ${document.getElementById('ot_ane').value.toUpperCase()}\n`;
+            msg += `*SGM:* ${document.getElementById('sgm').value.toUpperCase()}\n`;
+            msg += `*BA:* BA${document.getElementById('ba').value.toUpperCase()}\n`;
+            msg += `*SGD:* ${document.getElementById('sgd').value.toUpperCase()}\n`;
+            msg += `*INC:* 00${document.getElementById('inc').value.toUpperCase()}\n`;
+            msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
+            msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
+            msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
+            msg += `*END:* ${document.getElementById('endereco').value.toUpperCase()}\n`;
+            msg += `----------------------------------------------------\n`;
+            if (document.getElementById('servico').classList.contains('hidden') === false) {
+                msg += `*SERVICO REALIZADO* \n${document.getElementById('descricaoServico').value.toUpperCase()}\n\n`;
+            }
+            if (document.getElementById('material').classList.contains('hidden') === false) {
+                msg += `*MATERIAL UTILIZADO* \n${document.getElementById('descricaoMaterial').value.toUpperCase()}\n\n`;
+            }
+            if (document.getElementById('sucata').classList.contains('hidden') === false) {
+                msg += `*DEVOLUÇÃO SUCATA GERADA* \n${document.getElementById('descricaoSucata').value.toUpperCase()}\n\n`;
+            }
+            if (document.getElementById('recurso').classList.contains('hidden') === false) {
+                msg += `*NECESSÁRIO OUTRO RECURSO?* \n${document.getElementById('descricaoRecurso').value.toUpperCase()}\n\n`;
+            }
+            msg += `----------------------------------------------------\n`;
+            let sessionTime = "";
+            if (globalTimerStart) {
+                let sessionSeconds = Math.floor((Date.now() - globalTimerStart) / 1000);
+                sessionTime = "*TEMPO DA SESSÃO:* " + formatTime(sessionSeconds) + "\n";
+            }
+            let now = new Date();
+            let fullDate = formatFullDateTime(now);
+            let formattedFullDate = fullDate.charAt(0).toUpperCase() + fullDate.slice(1).toLowerCase();
+            msg = msg.toUpperCase() + "\n" + sessionTime + formattedFullDate;
+            document.getElementById('previewBox').textContent = msg;
         }
         function copiarMensagem() {
             let mensagem = document.getElementById('previewBox').textContent;
@@ -356,12 +484,44 @@
             });
         }
         function limparMensagem() {
-    document.getElementById('previewBox').textContent = '';
+            document.getElementById('previewBox').textContent = '';
         }
         function enviarWhatsApp() {
-            const mensagem = encodeURIComponent(document.getElementById('previewBox').textContent.toUpperCase()); // Convertendo para maiúsculas ao enviar
+            const mensagem = encodeURIComponent(document.getElementById('previewBox').textContent.toUpperCase());
             const url = `https://wa.me/?text=${mensagem}`;
             window.open(url, '_blank');
+        }
+        function savePdf() {
+            gerarMensagem();
+            var container = document.querySelector('.container');
+            var width = container.offsetWidth;
+            var height = container.offsetHeight;
+            let now = new Date();
+            let fileName = `Retorno_Campo_${now.toISOString()}.pdf`;
+            html2pdf().set({
+                margin: 0,
+                filename: fileName,
+                image: { type: 'jpeg', quality: 0.99 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'px', format: [width, height], orientation: 'portrait' }
+            }).from(container).save().then(() => {
+                const pdfButton = document.getElementById('pdfButton');
+                pdfButton.textContent = 'PDF Já Salvo';
+                pdfButton.style.backgroundColor = '#4CAF50';
+                pdfButton.style.color = '#fff';
+                pdfButton.style.border = '1px solid #4CAF50';
+                pdfButton.disabled = true;
+            });
+        }
+        // --- Função para exibir o overlay e o popup de bloqueio ---
+        document.getElementById('clickOverlay').addEventListener('click', function(e) {
+            document.getElementById('body-popup').style.display = 'block';
+            e.stopPropagation();
+        });
+        // --- Exibe o popup de boas-vindas e desabilita os campos ao carregar a página ---
+        window.onload = function() {
+            disableFields();
+            document.getElementById('welcome-popup').style.display = 'block';
         }
     </script>
 </body>
