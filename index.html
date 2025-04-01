@@ -92,7 +92,7 @@
             display: flex; justify-content: space-around; margin-top: 10px;
         }
         .popup-buttons button {
-            padding: 8px 16px; font-size: 14px; border-radius: 4px;
+            padding: 8px 16px; font-size: 14px; border-radius: 3px;
             cursor: pointer; border: none;
         }
         /* Overlay que intercepta cliques se a BAIXA não for iniciada */
@@ -239,7 +239,7 @@
             <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
             
             <label>OT/ANE:</label>
-            <input type="tel" id="ot_ane" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+            <input type="tel" id="ot_ane" maxlength="7" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
             
             <label>SGM:</label>
             <input type="tel" id="sgm" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
@@ -255,6 +255,12 @@
             
             <label>INC:</label>
             <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS">
+            
+            <label>5RO</label>
+            <input type="tel" id="5ro" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+            
+            <label>APR</label>
+            <input type="tel" id="apr" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
             
             <label>TRAFO:</label>
             <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
@@ -334,7 +340,7 @@
     <script>
         // --- Funções já existentes (validação, toggle) ---
         document.addEventListener("DOMContentLoaded", function () {
-            const camposNumericos = ["ot_ane", "ba", "sgd", "inc"];
+            const camposNumericos = ["ot_ane", "ba", "sgd", "inc", "5ro", "apr"];
             camposNumericos.forEach(id => {
                 document.getElementById(id).addEventListener("input", function () {
                     this.value = this.value.replace(/\D/g, '');
@@ -449,6 +455,8 @@
             msg += `*BA:* BA${document.getElementById('ba').value.toUpperCase()}\n`;
             msg += `*SGD:* ${document.getElementById('sgd').value.toUpperCase()}\n`;
             msg += `*INC:* 00${document.getElementById('inc').value.toUpperCase()}\n`;
+            msg += `*5RO:* 00${document.getElementById('5ro').value.toUpperCase()}\n`;
+            msg += `*APR:* 00${document.getElementById('apr').value.toUpperCase()}\n`;
             msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
             msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
             msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
