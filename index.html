@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODELO RETORNO DE CAMPO PESADA PREVETIVA/CORRETIVA</title>
+    <title>MODELO RETORNO DE CAMPO PESADA CORRETIVA/PREVENTIVA</title>
     <link rel="icon" href="pesada.png" type="image/png">
     <!-- Importa a biblioteca html2pdf -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
@@ -172,7 +172,7 @@
     </div>
     
     <div class="container">
-        <h2 style="text-align: center; font-size: 25px; font-weight: bold; color: #e63946;">MODELO RETORNO DE CAMPO<br>PESADA PREVETIVA/CORRETIVA</h2>
+        <h2 style="text-align: center; font-size: 25px; font-weight: bold; color: #e63946;">MODELO RETORNO DE CAMPO<br>PESADA CORRETIVA/PREVENTIVA</h2>
         <h2 style="text-align: center; font-size: 21px; font-weight: bold; color: #000;">(Versão 2.0)</h2>
         
         <!-- Agrupamento dos campos do formulário -->
@@ -235,8 +235,6 @@
                 <option value="DFJ-EP-64B">DFJ-EP-64B</option>
                 <option value="DFJ-EP-65B">DFJ-EP-65B</option>
             </select>
-            <!-- Campo para digitação se escolher "Outro" -->
-            <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
             
             <label>OT/ANE:</label>
             <input type="tel" id="ot_ane" maxlength="7" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
@@ -254,7 +252,7 @@
             <input type="tel" id="sgd" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
             
             <label>INC:</label>
-            <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, ATÉ 8 DIGITOS SEM ZEROS">
+            <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS ATÉ 8 DIGITOS (SEM ZEROS)">
             
             <label>5RO:</label>
             <input type="tel" id="5ro" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
@@ -263,13 +261,13 @@
             <input type="tel" id="apr" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
             
             <label>TRAFO:</label>
-            <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM PONTOS ESPACOS OU TRAÇOS">
+            <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS (SEM PONTOS ESPACOS OU TRAÇOS)">
             
             <label>ESTRUTURA:</label>
-            <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM PONTOS ESPACOS OU TRAÇOS">
+            <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS (SEM PONTOS ESPACOS OU TRAÇOS)">
             
             <label>ALIM:</label>
-            <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM PONTOS ESPACOS OU TRAÇOS">
+            <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS (SEM PONTOS ESPACOS OU TRAÇOS)">
         
             <label>ENDEREÇO:</label>
             <input type="text" id="endereco" placeholder="INSIRA ENDERECO COMPLETO">
@@ -328,10 +326,7 @@
         © 2025 Emanuel Aguiar (Assistente Administrativo Insourcing - Enel CE)<br>
         Todos os direitos reservados.
     </p>
-    
-    <!-- Popup para confirmação de cópia -->
-    <div id="popup" class="popup">Mensagem Copiada!</div>
-    
+        
     <!-- Botões adicionais para Reiniciar e Salvar PDF -->
     <div class="container" style="text-align: center; margin-top: 20px;">
         <button style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 10px;"  id="reset-button" onclick="resetSprint()">REINICIAR</button>
