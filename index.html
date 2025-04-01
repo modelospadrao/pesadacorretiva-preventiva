@@ -254,7 +254,7 @@
             <input type="tel" id="sgd" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
             
             <label>INC:</label>
-            <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS">
+            <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, ATÉ 8 DIGITOS SEM ZEROS">
             
             <label>5RO:</label>
             <input type="tel" id="5ro" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
@@ -263,13 +263,13 @@
             <input type="tel" id="apr" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
             
             <label>TRAFO:</label>
-            <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+            <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM PONTOS ESPACOS OU TRAÇOS">
             
             <label>ESTRUTURA:</label>
-            <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+            <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM PONTOS ESPACOS OU TRAÇOS">
             
             <label>ALIM:</label>
-            <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+            <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM PONTOS ESPACOS OU TRAÇOS">
         
             <label>ENDEREÇO:</label>
             <input type="text" id="endereco" placeholder="INSIRA ENDERECO COMPLETO">
@@ -455,8 +455,8 @@
             msg += `*BA:* BA${document.getElementById('ba').value.toUpperCase()}\n`;
             msg += `*SGD:* ${document.getElementById('sgd').value.toUpperCase()}\n`;
             msg += `*INC:* 00${document.getElementById('inc').value.toUpperCase()}\n`;
-            msg += `*5RO:* 00${document.getElementById('5ro').value.toUpperCase()}\n`;
-            msg += `*APR:* 00${document.getElementById('apr').value.toUpperCase()}\n`;
+            msg += `*5RO:* ${document.getElementById('5ro').value.toUpperCase()}\n`;
+            msg += `*APR:* ${document.getElementById('apr').value.toUpperCase()}\n`;
             msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
             msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
             msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
