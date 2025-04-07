@@ -363,34 +363,39 @@
         <option value="DFJ-EP-65B">DFJ-EP-65B</option>
       </select>
       <!-- Campo para "Outro" -->
-      <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
-      
+       
       <label>OT/ANE:</label>
-      <input type="tel" id="ot_ane" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+      <input type="tel" id="ot_ane" maxlength="7" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
       
       <label>SGM:</label>
       <input type="tel" id="sgm" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
-              
+     
       <label>DATA:</label>
       <input type="date" id="data" required>
       
       <label>BA:</label>
-      <input type="tel" id="ba" maxlength="8" pattern="\d*" inputmode="numeric" required title="INSIRA APENAS NÚMEROS, ATÉ 8 DIGITOS">
+      <input type="tel" id="ba" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 8 DIGITOS">
       
       <label>SGD:</label>
-      <input type="tel" id="sgd" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
+      <input type="tel" id="sgd" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 8 DIGITOS">
       
       <label>INC:</label>
-      <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS">
+      <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS, 8 DIGITOS">
+      
+      <label>APR:</label>
+      <input type="tel" id="apr" maxlength="7" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 7 DIGITOS">
+      
+      <label>5RO:</label>
+      <input type="tel" id="5ro" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 8 DIGITOS">
       
       <label>TRAFO:</label>
-      <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+      <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS, 10 DIGITOS">
       
       <label>ESTRUTURA:</label>
-      <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+      <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS, 10 DIGITOS">
       
       <label>ALIM:</label>
-      <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS">
+      <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS, 7 DIGITOS">
   
       <label>ENDEREÇO:</label>
       <input type="text" id="endereco" placeholder="INSIRA ENDERECO COMPLETO">
@@ -455,8 +460,6 @@
     Todos os direitos reservados.
   </p>
   
-  <!-- Popup para confirmação de cópia -->
-  <div id="popup" class="popup">Mensagem Copiada!</div>
   
   <!-- Botões adicionais para Reiniciar -->
   <div class="container" style="text-align: center; margin-top: 20px;">
@@ -622,6 +625,8 @@
       msg += `*BA:* BA${document.getElementById('ba').value.toUpperCase()}\n`;
       msg += `*SGD:* ${document.getElementById('sgd').value.toUpperCase()}\n`;
       msg += `*INC:* 00${document.getElementById('inc').value.toUpperCase()}\n`;
+      msg += `*APR:* 00${document.getElementById('apr').value.toUpperCase()}\n`;
+      msg += `*5RO:* 00${document.getElementById('5ro').value.toUpperCase()}\n`;
       msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
       msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
       msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
