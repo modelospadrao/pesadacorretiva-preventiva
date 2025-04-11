@@ -3,147 +3,273 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MODELO RETORNO DE CAMPO PESADA PREVETIVA/CORRETIVA</title>
+  <title>MODELO RETORNO DE CAMPO LINHA VIVA</title>
   <link rel="icon" href="pesada.png" type="image/png">
   <!-- Importa a biblioteca html2pdf -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <style>
     /* Estilos Gerais e do Formulário */
-    body { font-family: Cambria, Cochin, Georgia, Times, sans-serif; overscroll-behavior-y: none; }
-    .container { width: 90%; margin: auto; }
-    textarea { width: 100%; height: 469px; }
-    .hidden { display: none; }
+    body { 
+      font-family: Cambria, Cochin, Georgia, Times, sans-serif; 
+      overscroll-behavior-y: none; 
+    }
+    .container { 
+      width: 90%; 
+      margin: auto; 
+    }
+    textarea { 
+      width: 100%; 
+      height: 469px; 
+    }
+    .hidden { 
+      display: none; 
+    }
     input[type="text"], input[type="date"], input[type="number"], .supervisor-box, .preview-text {
-      width: 100%; padding: 9px; margin: 6px 0;
-      font-size: 14px; border: 1px solid #ddd;
-      text-transform: uppercase; background-color: #f0f0f0;
+      width: 100%; 
+      padding: 9px; 
+      margin: 6px 0;
+      font-size: 14px; 
+      border: 1px solid #ddd;
+      text-transform: uppercase; 
+      background-color: #f0f0f0;
     }
     input[type="tel"], select, input {
-      width: 100%; padding: 9px; margin: 6px 0;
-      font-size: 14px; border: 1px solid #ddd;
-      text-transform: uppercase; background-color: #f0f0f0;
+      width: 100%; 
+      padding: 9px; 
+      margin: 6px 0;
+      font-size: 14px; 
+      border: 1px solid #ddd;
+      text-transform: uppercase; 
+      background-color: #f0f0f0;
     }
-    /* Botões do formulário */
+    /* Botões do Formulário */
     .button-default {
-      border: 1px solid black; padding: 8px 16px; margin: 5px;
-      background-color: #fff; cursor: pointer; font-size: 14px;
-      border-radius: 4px; transition: all 0.3s ease;
+      border: 1px solid black; 
+      padding: 8px 16px; 
+      margin: 5px;
+      background-color: #fff; 
+      cursor: pointer; 
+      font-size: 14px; 
+      border-radius: 4px; 
+      transition: all 0.3s ease;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     .button-default.selected {
-      background-color: #000; color: #fff; border: 1px solid #000;
+      background-color: #000; 
+      color: #fff; 
+      border: 1px solid #000;
     }
-    .button-default:hover { box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+    .button-default:hover { 
+      box-shadow: 0 0 10px rgba(0,0,0,0.2); 
+    }
     .button-gerarMensagem {
-      background-color: #616964; color: white; padding: 8px 16px; margin: 5px;
-      cursor: pointer; font-size: 14px; border-radius: 4px;
-      transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      background-color: #616964; 
+      color: white; 
+      padding: 8px 16px; 
+      margin: 5px;
+      cursor: pointer; 
+      font-size: 14px; 
+      border-radius: 4px;
+      transition: all 0.3s ease; 
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     .button-enviarWhatsApp {
-      background-color: #00b145; color: white; padding: 8px 16px; margin: 5px;
-      cursor: pointer; font-size: 14px; border-radius: 4px;
-      transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      background-color: #00b145; 
+      color: white; 
+      padding: 8px 16px; 
+      margin: 5px;
+      cursor: pointer; 
+      font-size: 14px; 
+      border-radius: 4px;
+      transition: all 0.3s ease; 
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     .clear-button {
-      background-color: #f44336; color: white; padding: 8px 16px; margin: 5px;
-      cursor: pointer; font-size: 14px; border-radius: 4px;
-      transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      background-color: #f44336; 
+      color: white; 
+      padding: 8px 16px; 
+      margin: 5px;
+      cursor: pointer; 
+      font-size: 14px; 
+      border-radius: 4px;
+      transition: all 0.3s ease; 
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     .preview-box {
-      border: 1px solid #ddd; padding: 10px; margin-top: 20px;
-      background-color: #f0f0f0; white-space: pre-wrap;
-      font-family: monospace; font-size: 14px;
+      border: 1px solid #ddd; 
+      padding: 10px; 
+      margin-top: 20px;
+      background-color: #f0f0f0; 
+      white-space: pre-wrap;
+      font-family: monospace; 
+      font-size: 14px;
     }
-    /* Botões Sim/Não do toggle */
+    /* Botões Sim/Não */
     .button-yes {
-      background-color: #4CAF50; color: white; border: 1px solid #4CAF50;
-      padding: 8px 16px; font-size: 14px; border-radius: 4px;
-      cursor: pointer; margin: 0 5px;
+      background-color: #4CAF50; 
+      color: white; 
+      border: 1px solid #4CAF50;
+      padding: 8px 16px; 
+      font-size: 14px; 
+      border-radius: 4px;
+      cursor: pointer; 
+      margin: 0 5px;
     }
     .button-yes.selected {
-      background-color: #000; color: #fff; border: 1px solid #000;
+      background-color: #000; 
+      color: #fff; 
+      border: 1px solid #000;
     }
     .button-no {
-      background-color: #ff0000; color: #ffffff; border: 1px solid #ddd;
-      padding: 8px 16px; font-size: 14px; border-radius: 4px;
-      cursor: pointer; margin: 0 5px;
+      background-color: #ff0000; 
+      color: #ffffff; 
+      padding: 8px 16px; 
+      font-size: 14px; 
+      border-radius: 4px;
+      cursor: pointer; 
+      margin: 0 5px;
     }
     .button-no.selected {
-      background-color: #000; color: #fff; border: 1px solid #000;
+      background-color: #000; 
+      color: #fff; 
+      border: 1px solid #000;
     }
     /* Global Clock */
     #global-clock {
-      position: fixed; top: 10px; left: 10px;
-      font-size: 24px; font-family: 'Courier New', Courier, monospace;
-      color: #fff; background-color: #000; padding: 10px;
-      border-radius: 8px; z-index: 1001; display: none;
+      position: fixed; 
+      top: 10px; 
+      left: 10px;
+      font-size: 24px; 
+      font-family: 'Courier New', Courier, monos-serif;
+      color: #fff; 
+      background-color: #000; 
+      padding: 10px;
+      border-radius: 8px; 
+      z-index: 1001; 
+      display: none;
     }
-    /* Popups padrão (Atualização, Boas-vindas, notificações, cópia, opções, confirmação) */
+    /* Popups padrão */
     .popup {
-      display: none; position: fixed;
-      top: 50%; left: 50%;
+      display: none; 
+      position: fixed;
+      top: 50%; 
+      left: 50%;
       transform: translate(-50%, -50%);
-      padding: 20px; background-color: rgba(0,0,0,0.8);
-      color: white; font-size: 16px; border-radius: 5px;
-      z-index: 1000; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      padding: 20px; 
+      background-color: rgba(0,0,0,0.8);
+      color: white; 
+      font-size: 16px; 
+      border-radius: 5px;
+      z-index: 1100; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
       text-align: left;
     }
     .popup-buttons {
-      display: flex; justify-content: space-around; margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
     }
     .popup-buttons button {
+      flex: 1 1 auto;
+      white-space: normal;
+      word-wrap: break-word;
+      font-size: 12px;
+      padding: 6px 10px;
+      min-width: 120px;
+      border-radius: 4px;
+    }
+    /* Popup de confirmação */
+    .popup-confirm {
+      background-color: #fff; 
+      color: red;            
+      font-size: 16px;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1200; 
+      display: none;
+    }
+    .popup-confirm .btn-sim {
+      background-color: green; 
+      color: white;
       padding: 8px 16px;
       font-size: 14px;
+      border: none;
       border-radius: 8px;
       margin: 4px;
-      border: 1px solid #fff;
       cursor: pointer;
       transition: background-color 0.2s ease;
     }
-    /* Efeito de shake para alertas */
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      20% { transform: translateX(-10px); }
-      40% { transform: translateX(10px); }
-      60% { transform: translateX(-10px); }
-      80% { transform: translateX(10px); }
-      100% { transform: translateX(0); }
+    .popup-confirm .btn-nao {
+      background-color: red; 
+      color: white;
+      padding: 8px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      margin: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
     }
-    .shake {
-      animation: shake 0.5s;
-    }
-    /* Container para os botões de compartilhamento, etc. */
-    .share-buttons {
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-    /* Overlay que intercepta cliques se a BAIXA não for iniciada */
-    #clickOverlay {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: transparent; z-index: 2000;
+    /* Overlay */
+    #popupOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 500; 
       display: none;
     }
-    /* Popup que aparece ao clicar no overlay */
+    #clickOverlay {
+      position: fixed; 
+      top: 0; left: 0;
+      width: 100%; 
+      height: 100%;
+      background-color: transparent; 
+      z-index: 2000;
+      display: none;
+    }
+    /* Popup ao clicar no overlay */
     #body-popup {
-      display: none; position: fixed;
-      top: 20px; left: 50%;
+      display: none; 
+      position: fixed;
+      top: 20px; 
+      left: 50%;
       transform: translateX(-50%);
       background-color: rgba(0,0,0,0.85);
-      color: #fff; padding: 15px 20px;
-      border-radius: 8px; z-index: 2500; font-size: 18px;
+      color: #fff; 
+      padding: 15px 20px;
+      border-radius: 8px; 
+      z-index: 2500; 
+      font-size: 18px;
       cursor: pointer;
     }
-    /* Botão Reiniciar Sprint: garantir que fique acima do overlay */
+    /* Botão Reiniciar */
     #reset-button {
-      border: 1px solid black; padding: 8px 16px;
-      background-color: #000000; color: white; cursor: pointer;
-      font-size: 20px; border-radius: 32px; margin: 10px;
-      display: block; width: fit-content; margin-left: auto; margin-right: auto;
-      position: relative; z-index: 3000;
+      border: 1px solid black; 
+      padding: 8px 16px;
+      background-color: #000; 
+      color: white; 
+      cursor: pointer;
+      font-size: 20px; 
+      border-radius: 32px; 
+      margin: 10px;
+      display: block; 
+      width: fit-content; 
+      margin-left: auto; 
+      margin-right: auto;
+      position: relative; 
+      z-index: 3000;
     }
-    /* Popup de aviso de PDF não salvo ao reiniciar */
+    /* Popup de aviso de PDF não salvo */
     #pdf-warning-popup {
       display: none;
       position: fixed;
@@ -156,18 +282,19 @@
       font-size: 16px;
       border: 2px solid #ff0000;
       border-radius: 8px;
-      z-index: 2001;  /* Garante que o popup fique acima de outros elementos */
+      z-index: 2001;
       text-align: center;
-      pointer-events: auto;  /* Garantir que o popup receba interações */
+      pointer-events: auto;
     }
-    /* Popup de lembrete de PDF não salvo após compartilhar via WhatsApp */
+    /* Popup de lembrete de PDF não salvo */
     #pdf-reminder-popup {
       display: none;
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 15px; background-color: #ffcccc;
+      padding: 15px; 
+      background-color: #ffcccc;
       color: #000;
       font-size: 16px;
       border: 2px solid #ff0000;
@@ -175,29 +302,52 @@
       z-index: 1500;
       text-align: center;
     }
+    .input-container {
+      display: flex;
+      flex-wrap: nowrap;                /* Permite quebra de linha */
+      gap: 23px;
+      justify-content: flex-start;    /* Alinha os itens à esquerda */
+    }
+    .input-group {
+      /* Define cada grupo para ocupar 50% da linha, descontando metade do gap */
+      flex: 0 0 calc(50% - 11.5px);
+    }
+    .input-container label {
+      display: block;
+      width: 100%;
+      margin-bottom: -1px;
+      text-align: left;
+    }
+    .input-container input {
+      width: 95%;
+      padding: 4px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
-  <!-- Overlay -->
+  <!-- Overlays e Popups -->
+  <div id="popupOverlay"></div>
   <div id="clickOverlay"></div>
-  
-  <!-- Global Clock -->
   <div id="global-clock"></div>
-  
-   <!-- Popup de Atualização -->
   <div id="update-popup" class="popup" style="font-size: 15px;">
     <p>⚠️ NOTAS DE ATUALIZAÇÃO!!!<br><br>
        1️⃣ O campo "Pré-Visualização da Mensagem" agora é preenchido automaticamente sempre que um valor é alterado.<br>
-       2️⃣ Foram adicionadas mensagens pré-formatadas quando marcadas a opção ("NÃO") no questionário.<br>
+       2️⃣ Foram adicionadas mensagens pré-formatadas quando marcada a opção ("NÃO").<br>
        3️⃣ Incluídos alertas para lembrar de salvar o arquivo em PDF.<br>
        4️⃣ Agora, o sistema renomeia automaticamente o arquivo PDF para facilitar sua localização, com base no retorno do preenchimento diário.<br>
+       5️⃣ Alguns campos foram atualizados, exigindo o preenchimento obrigatório!<br>
+       6️⃣ Foram adicionadas novas opções no questionário.<br>
+       7️⃣ Foram inseridos campos para o horário de início e fim da atividade.<br>
+       8️⃣ Foi ajustada a condição para salvar primeiro o PDF e, em seguida, encaminhar a mensagem de Pré-visualização.<br>
       <br>
-      <button onclick="closeUpdatePopup()" style="font-size: 15px; padding: 7px 125px; border-radius: 14px; background-color: #ffffff; color: black; border: none; cursor: pointer; display: block; margin: 0 auto;">
-      Fechar
-  </button>
+      <button onclick="closeUpdatePopup(); hideOverlay();" style="font-size: 15px; padding: 7px 125px; border-radius: 14px; background-color: #fff; color: black; border: none; cursor: pointer; display: block; margin: 0 auto;">
+        Fechar
+      </button>
   </div>
-  
-  <!-- Popup de Boas-Vindas -->
   <div id="welcome-popup" class="popup">
     <p>Bem-vindo! Deseja iniciar?</p>
     <div class="popup-buttons">
@@ -205,75 +355,64 @@
       <button class="button-no" onclick="handleNoSprint()">Não</button>
     </div>
   </div>
-  
-  <!-- Popup de Notificação para Sim -->
   <div id="yes-notification-popup" class="popup">
     <p>Os campos estão liberados para edição. O contador de tempo foi ativado.</p>
   </div>
-  
-  <!-- Popup de Notificação para Não -->
   <div id="no-notification-popup" class="popup">
     <p>Edição cancelada!</p>
   </div>
-  
-  <!-- Popups adicionais para ações -->
   <div id="gerar-popup" class="popup">
     <p>Mensagem Gerada!</p>
-    <button onclick="document.getElementById('gerar-popup').style.display='none'">Fechar</button>
+    <button onclick="document.getElementById('gerar-popup').style.display='none'; hideOverlay();">Fechar</button>
   </div>
   <div id="limpar-popup" class="popup">
     <p>Mensagem limpa com sucesso!</p>
-    <button onclick="document.getElementById('limpar-popup').style.display='none'">Fechar</button>
+    <button onclick="document.getElementById('limpar-popup').style.display='none'; hideOverlay();">Fechar</button>
   </div>
   <div id="encaminhar-popup" class="popup">
     <p>Mensagem encaminhada com sucesso!<br>
        No final do dia o responsável deverá incrementar no formulário essas evidências!</p>
-    <button onclick="document.getElementById('encaminhar-popup').style.display='none'">Fechar</button>
+    <button onclick="document.getElementById('encaminhar-popup').style.display='none'; hideOverlay();">Fechar</button>
   </div>
-  
-  <!-- Popup para confirmação de cópia -->
   <div id="popup" class="popup">Mensagem Copiada!</div>
-  
-  <!-- Popup para exibição das opções ao clicar "Não" -->
   <div id="options-popup" class="popup"></div>
-  
-  <!-- Popup para confirmação da seleção -->
   <div id="confirm-popup" class="popup"></div>
-  
-  <!-- Popup para aviso de PDF não salvo ao reiniciar -->
-  <div id="pdf-warning-popup">
+  <!-- Popup para Reiniciar sem Salvar PDF -->
+  <div id="pdf-warning-popup" class="popup">
     <p>Você NÃO salvou o PDF!<br>Tem certeza que deseja reiniciar sem salvar o PDF?</p>
     <div class="popup-buttons">
       <button onclick="confirmReset()">Sim, reiniciar</button>
       <button onclick="cancelReset()">Cancelar</button>
     </div>
   </div>
-  
-  <!-- Popup de lembrete de PDF não salvo após compartilhar via WhatsApp -->
-  <div id="pdf-reminder-popup">
+  <!-- Popup para campos obrigatórios -->
+  <div id="obrigatorio-popup" class="popup">
+    <p>Por favor, preencha os seguintes campos obrigatórios:<br><!-- Mensagem definida dinamicamente --></p>
+    <div class="popup-buttons">
+      <button onclick="document.getElementById('obrigatorio-popup').style.display='none';">Fechar</button>
+    </div>
+  </div>
+  <div id="pdf-reminder-popup" class="popup">
     <p>Atenção: Você não salvou o PDF! Salve-o para arquivar a evidência.</p>
   </div>
-  
-  <!-- Popup que aparece ao clicar no overlay -->
-  <div id="body-popup" onclick="this.style.display='none'; event.stopPropagation();">
+  <div id="body-popup" class="popup" onclick="this.style.display='none'; event.stopPropagation();">
     ⚠️ ATENÇÃO: Todos os campos estão bloqueados!<br>
-    Reinicie a página utilizando o botão "Reiniciar".
+    Reinicie a página utilizando o botão "REINICIAR".
   </div>
   
   <div class="container">
     <h2 style="text-align: center; font-size: 25px; font-weight: bold; color: #e63946;">
-      MODELO RETORNO DE CAMPO<br>PESADA PREVETIVA/CORRETIVA
+      MODELO RETORNO DE CAMPO<br>LINHA VIVA PREVETIVA/CORRETIVA
     </h2>
     <h2 style="text-align: center; font-size: 21px; font-weight: bold; color: #000;">(Versão 3.0)</h2>
     
-    <!-- Agrupamento dos campos do formulário -->
+    <!-- Início do Formulário -->
     <div id="formFields">
-      <!-- Campo para "Outro" -->
       <input type="text" id="outroLead" class="hidden" placeholder="Digite o nome do LEAD">
       
-      <h2>Preencha os dados da execução</h2>
+      <h2 style="color: #000000; font-size: 22px; text-align: center; margin: 20px 0; border-bottom: 5px solid #000000;">
+      Preencha os dados da Equipe</h2>
       
-      <!-- Lista suspensa para o nome das pessoas -->
       <label for="pessoa">Nome do Componente:</label>
       <select id="pessoa" onchange="verificarOutraPessoa()">
         <option value="NENHUM">NENHUM</option>
@@ -322,7 +461,6 @@
         <option value="Ronaldo da Silva Mesquita">Ronaldo da Silva Mesquita</option>
         <option value="Valdecir Alves Moreira">Valdecir Alves Moreira (Operador de Munck)</option>
       </select>
-      <!-- Campo para "Outro" -->
       <input type="text" id="outraPessoa" class="hidden" placeholder="Digite o nome da pessoa">
       
       <label for="lead">LEAD:</label>
@@ -335,9 +473,19 @@
         <option value="DFJ-EP-02B">DFJ-EP-02B</option>
         <option value="DFJ-EP-01D">DFJ-EP-01D</option>
         <option value="DFJ-EP-02D">DFJ-EP-02D</option>
-        </select>
-      <!-- Campo para "Outro" -->
-       
+      </select>
+      
+      <div class="input-container">
+        <div class="input-group">
+          <label for="br1">BR LÍDER:</label>
+          <input type="tel" id="br1" value="BR" maxlength="12" pattern="\d*" inputmode="numeric" placeholder="12 DÍGITOS"
+                 onkeydown="enforcePrefix(event, 'BR')" oninput="fixPrefixInput(this, 'BR')">
+        </div>
+      </div>
+      
+      <h2 style="color: #e63946; font-size: 22px; text-align: center; margin: 20px 0; border-bottom: 5px solid #e63946;">
+      Preencha dados da Execução
+    </h2>
       <label>OT/ANE:</label>
       <input type="tel" id="ot_ane" maxlength="7" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS">
       
@@ -348,32 +496,84 @@
       <input type="date" id="data" required>
       
       <label>BA:</label>
-      <input type="tel" id="ba" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 8 DIGITOS">
+      <!-- Campo BA: removemos o onfocus para comportamento similar ao DT -->
+      <input type="tel" id="ba" value="BA" maxlength="10" pattern="\d*" inputmode="numeric"
+             placeholder="INSIRA APENAS NÚMEROS, 8 DÍGITOS"
+             onkeydown="enforcePrefix(event, 'BA')"
+             oninput="fixPrefixInput(this, 'BA')">
       
       <label>SGD:</label>
-      <input type="tel" id="sgd" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 8 DIGITOS">
+      <input type="tel" id="sgd" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 8 DÍGITOS">
       
       <label>INC:</label>
-      <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS, 8 DIGITOS">
+      <input type="tel" id="inc" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS, 8 DÍGITOS">
       
-      <label>APR:</label>
-      <input type="tel" id="apr" maxlength="7" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 7 DIGITOS">
+      <label>DT:</label>
+      <input type="tel" id="dt" value="DT" maxlength="10" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS SEM ZEROS, 8 DÍGITOS"
+       onkeydown="enforcePrefix(event, 'DT')" oninput="fixPrefixInput(this, 'DT')">
       
+      <label>APR DIGITAL:</label>
+      <input type="tel" id="apr" maxlength="7" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 7 DÍGITOS">
+      
+      <label>APR MANUAL (PAPEL):</label>
+      <input type="tel" id="apr2" maxlength="11" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 11 DÍGITOS">
+      
+      <!-- Campo 5RO: dois botões e uma caixa de input readonly que será preenchida automaticamente -->
       <label>5RO:</label>
-      <input type="tel" id="5ro" maxlength="8" pattern="\d*" inputmode="numeric" placeholder="INSIRA APENAS NÚMEROS, 8 DIGITOS">
+      <div id="cincoRO-container">
+        <button type="button" class="button-default" id="cincoRO-sim" onclick="selectCincoRO('SIM', this)">SIM</button>
+        <button type="button" class="button-default" id="cincoRO-nao" onclick="selectCincoRO('NÃO', this)">NÃO</button>
+        <input type="text" id="cincoRO-input" class="hidden" readonly>
+      </div>
       
       <label>TRAFO:</label>
-      <input type="text" id="traf" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS, 10 DIGITOS">
-      
+      <input type="text" id="traf" maxlength="10" 
+             pattern="^[A-Za-z0-9]{1,10}$" 
+             placeholder="INSIRA APENAS LETRAS E NÚMEROS, MÁXIMO 10 DÍGITOS">
+
+      <label>TOMBAMENTO:</label>
+      <input type="text" id="Tomb" maxlength="10" 
+             pattern="^[A-Za-z0-9]{1,10}$" 
+             placeholder="INSIRA APENAS NÚMEROS, MÁXIMO 10 DÍGITOS">
+
       <label>ESTRUTURA:</label>
-      <input type="text" id="estrut" maxlength="10" pattern="[A-Za-z0-9]{6}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS, 10 DIGITOS">
+      <input type="text" id="estrut" maxlength="10" 
+             pattern="^[A-Za-z0-9]{1,10}$" 
+             placeholder="INSIRA APENAS LETRAS E NÚMEROS, MÁXIMO 10 DÍGITOS">
       
       <label>ALIM:</label>
-      <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPACOS OU TRAÇOS, 7 DIGITOS">
-  
-      <label>ENDEREÇO:</label>
-      <input type="text" id="endereco" placeholder="INSIRA ENDERECO COMPLETO">
+      <input type="text" id="alim" maxlength="7" pattern="[A-Za-z0-9]{7}" placeholder="INSIRA APENAS LETRAS E NÚMEROS SEM ESPAÇOS OU TRAÇOS, 7 DÍGITOS">
       
+      <label>ENDEREÇO:</label>
+      <input type="text" id="endereco" placeholder="INSIRA ENDEREÇO COMPLETO">
+      <br><br>
+      
+      <div class="input-container">
+        <div class="time-input-group">
+          <label for="start-time">Horário de Início:</label>
+          <input 
+            type="tel" 
+            inputmode="numeric" 
+            id="start-time" 
+            maxlength="5" 
+            placeholder="HH:mm" 
+            oninput="insertColon(this)">
+        </div>
+        <div class="time-input-group">
+          <label for="end-time">Horário Final:</label>
+          <input 
+            type="tel" 
+            inputmode="numeric" 
+            id="end-time" 
+            maxlength="5" 
+            placeholder="HH:mm" 
+            oninput="insertColon(this)">
+        </div>
+      </div>
+      <h2 style="color: #e63946; font-size: 22px; text-align: center; margin: 20px 0; border-bottom: 5px solid #e63946;">
+      Descreva detalhes da Atividade
+    </h2>
+      <!-- Campos opcionais para Serviço, Material, Sucata e Recurso -->
       <h3>Serviço Realizado?</h3>
       <button class="button-default" data-field="servico" onclick="toggleEditableField('servico', 'sim', this)">Sim</button>
       <button class="button-default" data-field="servico" onclick="toggleEditableField('servico', 'nao', this)">Não</button>
@@ -398,7 +598,7 @@
         <input type="text" class="preview-text" id="descricaoSucata">
       </div>
       
-      <h3>Necessário Outro Recurso?</h3>
+      <h3>Necessário Envio de outra Equipe?</h3>
       <button class="button-default" data-field="recurso" onclick="toggleEditableField('recurso', 'sim', this)">Sim</button>
       <button class="button-default" data-field="recurso" onclick="toggleEditableField('recurso', 'nao', this)">Não</button>
       <div id="recurso" class="hidden">
@@ -407,26 +607,21 @@
       </div>
       
       <br><br>
-      
-      <button class="button-gerarMensagem" onclick="gerarMensagem(); document.getElementById('gerar-popup').style.display='block';">Gerar Mensagem</button>
+      <button class="button-gerarMensagem" onclick="gerarMensagem(); document.getElementById('gerar-popup').style.display='block'; showOverlay();">
+        Gerar Mensagem
+      </button>
       
       <br><br>
-      
       <h3>Pré-Visualização da Mensagem</h3>
       <div id="previewBox" class="preview-box"></div>
       
-      <!-- Container para os botões de compartilhar, encaminhar, copiar e salvar PDF -->
       <div class="share-buttons">
-        <button class="button-default" onclick="copiarMensagem()">Copiar Mensagem</button>
-        <button class="button-enviarWhatsApp" onclick="enviarWhatsApp()">Encaminhar para WhatsApp</button>
-        <button class="clear-button" onclick="limparMensagem(); document.getElementById('limpar-popup').style.display='block';">Limpar Mensagem</button>
+        <!-- Botão para encaminhar via WhatsApp inicia desabilitado e será habilitado após salvar o PDF -->
+        <button id="whatsappButton" class="button-enviarWhatsApp" onclick="enviarWhatsApp()" disabled>Encaminhar para WhatsApp</button>
         <button id="pdfButton" class="button-default" onclick="savePdf()">Salvar PDF</button>
       </div>
-      
       <br>
-      
-      <!-- Logo da ENEL -->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Enel_Group_logo.svg" alt="Logo ENEL" style="width: 193px; height: auto; display: block; margin-left: auto; margin-right: auto;">    
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Enel_Group_logo.svg" alt="Logo ENEL" style="width: 193px; height: auto; display: block; margin: auto;">
     </div>
   </div>
   <p style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 40px;">
@@ -434,45 +629,69 @@
     Todos os direitos reservados.
   </p>
   
-  
-  <!-- Botões adicionais para Reiniciar -->
   <div class="container" style="text-align: center; margin-top: 20px;">
-    <button style="text-align: center; font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 10px;" id="reset-button" onclick="resetSprint()">REINICIAR</button>
+    <button id="reset-button" style="font-style: italic; font-family: 'Courier New', Courier, monospace; margin-top: 10px;" onclick="resetSprint()">REINICIAR</button>
   </div>
   
   <script>
-    /* Variáveis Globais */
+    // Funções para exibir/ocultar overlay
+    function showOverlay() {
+      document.getElementById('popupOverlay').style.display = 'block';
+    }
+    function hideOverlay() {
+      document.getElementById('popupOverlay').style.display = 'none';
+    }
+    document.getElementById('popupOverlay').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('atencao-popup').style.display = 'block';
+    });
+    
+    // Variáveis globais
     let globalTimerStart = null;
     let globalTimerInterval = null;
     let pdfSaved = false;
     let lastInteraction = Date.now();
     let currentOptionField = "";
-    let currentOptionButton = null; // Guarda referência ao botão clicado
-    // Objeto para armazenar as notas dos campos
+    let currentOptionButton = null;
+    
+    // Variáveis para os campos opcionais
+    let respServico = "";
+    let respMaterial = "";
+    let respSucata = "";
+    let respRecurso = "";
+    
+    // Variável para o campo 5RO
+    let cincoROValue = "";
+    
     let notas = {
       servico: "",
       material: "",
       sucata: "",
       recurso: ""
     };
-    // Opções pré-definidas para cada campo quando o usuário clicar "Não"
+    let fieldsAnswered = {
+      servico: false,
+      material: false,
+      sucata: false,
+      recurso: false
+    };
+    
     const optionsForField = {
-      servico: ["Carros no local", "Outros"],
-      material: ["Não foi solicitado para este atendimento", "Não houve utilização de material", "Apoio de outra equipe", "Outros"],
-      sucata: ["Sem sucata gerada", "Não houve recolha", "Problema na identificação", "Outros"],
-      recurso: ["Recurso não solicitado", "Serviço concluído 100%", "Não houve necessidade", "Outros"]
+      servico: ["CARROS NO LOCAL", "FALTA DE TEMPO HÁBIL", "DOCUMENTOS DIVERGENTE", "CHUVA", "UMIDADE 85% SUPERIOR PREVISTO NA IT 1403", "OUTROS", "ÁREA DE RISCO"],
+      material: ["NÃO FOI SOLICITADO MATERIAL PARA ESTE ATENDIMENTO", "NÃO HOUVE UTILIZAÇÃO DE MATERIAL", "APOIO DE OUTRA EQUIPE", "OUTROS"],
+      sucata: ["SEM SUCATA GERADA", "OUTROS"],
+      recurso: ["ENVIAR EQUIPE PESADA", "NECESSARIO EQUIPE DE PODA", "NECESSARIO RECOLHA DE RESÍDUOS", "NECESSÁRIO EQUIPE DO EMERGENCIAL", "OUTROS"]
     };
-    // Mensagens customizadas para cada campo
     const messagesForField = {
-      servico: "Tem certeza que não executou o serviço? Selecione o motivo:",
-      material: "Tem certeza que não utilizou o material? Selecione o motivo:",
-      sucata: "Tem certeza que não gerou a devolução de sucata? Selecione o motivo:",
-      recurso: "Tem certeza que não foi necessário outro recurso? Selecione o motivo:"
+      servico: "SELECIONE O MOTIVO:",
+      material: "SELECIONE O MOTIVO:",
+      sucata: "SELECIONE O MOTIVO:",
+      recurso: "SELECIONE O MOTIVO:"
     };
-
-    /* Funções de Validação e Toggle */
+    
+    // Atenção: removemos "ba" da lista para não aplicar a filtragem numérica no campo que usa prefixo!
     document.addEventListener("DOMContentLoaded", function () {
-      const camposNumericos = ["ot_ane", "ba", "sgd", "inc"];
+      const camposNumericos = ["ot_ane", "sgd", "inc"];
       camposNumericos.forEach(id => {
         document.getElementById(id).addEventListener("input", function () {
           this.value = this.value.replace(/\D/g, '');
@@ -487,29 +706,65 @@
         });
       });
     });
+    
+    // Função para os campos opcionais
     function toggleEditableField(field, choice, btn) {
       const container = document.getElementById(field);
-      if (choice === 'sim') {
-        container.classList.remove('hidden');
-        // Limpa qualquer nota previamente definida para o campo
-        if(notas.hasOwnProperty(field)) { notas[field] = ""; }
-      } else { // choice === 'nao'
-        if(["servico", "material", "sucata", "recurso"].includes(field)) {
-          container.classList.add('hidden');
-          showOptionsPopup(field);
-        } else {
-          container.classList.add('hidden');
-        }
-      }
       const buttons = document.querySelectorAll("button[data-field='" + field + "']");
       buttons.forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+
+      if (field === "recurso") {
+        if (choice === 'sim') {
+          container.classList.add('hidden');
+          let customOptions = [
+            "ENVIAR EQUIPE PESADA",
+            "NECESSARIO EQUIPE DE PODA",
+            "NECESSARIO RECOLHA DE RESÍDUOS",
+            "NECESSÁRIO EQUIPE DO EMERGENCIAL",
+            "OUTROS"
+          ];
+          showOptionsPopup(field, customOptions);
+          respRecurso = "SIM";
+        } else { 
+          container.classList.remove('hidden');
+          document.getElementById('descricaoRecurso').value = "SERVIÇO CONCLUÍDO 100%";
+          respRecurso = "NÃO";
+          fieldsAnswered[field] = true;
+        }
+        gerarMensagem();
+        return;
+      }
+
+      if (choice === 'sim') {
+        container.classList.remove('hidden');
+        if (field === "servico") { document.getElementById('descricaoServico').value = ""; respServico = "SIM"; }
+        if (field === "material") { document.getElementById('descricaoMaterial').value = ""; respMaterial = "SIM"; }
+        if (field === "sucata") { document.getElementById('descricaoSucata').value = ""; respSucata = "SIM"; }
+        fieldsAnswered[field] = true;
+      } else {
+        container.classList.add('hidden');
+        showOptionsPopup(field);
+      }
+      gerarMensagem();
     }
+    
+    function selectCincoRO(value, btn) {
+      document.getElementById('cincoRO-sim').classList.remove('selected');
+      document.getElementById('cincoRO-nao').classList.remove('selected');
+      btn.classList.add('selected');
+      cincoROValue = value;
+      let input = document.getElementById('cincoRO-input');
+      input.classList.remove('hidden');
+      input.value = value;
+      gerarMensagem();
+    }
+    
     function formatarData(data) {
       const partes = data.split("-");
       return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
-    /* Funções para habilitar/desabilitar os campos */
+    
     function disableFields() {
       const formFields = document.getElementById("formFields");
       const fields = formFields.querySelectorAll("input, select, textarea, button");
@@ -520,7 +775,7 @@
       const fields = formFields.querySelectorAll("input, select, textarea, button");
       fields.forEach(field => { field.disabled = false; });
     }
-    /* Funções do Temporizador e PDF */
+    
     function formatTime(totalSeconds) {
       let minutes = Math.floor(totalSeconds / 60);
       let seconds = totalSeconds % 60;
@@ -541,12 +796,12 @@
       let horas = date.getHours();
       let minutos = date.getMinutes();
       let segundos = date.getSeconds();
-      mes = mes.charAt(0).toUpperCase() + mes.slice(1);
       let strHoras = `${horas} ${horas === 1 ? "hora" : "horas"}`;
       let strMinutos = `${minutos} ${minutos === 1 ? "minuto" : "minutos"}`;
       let strSegundos = `${segundos} ${segundos === 1 ? "segundo" : "segundos"}`;
       return `${dia} de ${mes} de ${ano} às ${strHoras} e ${strMinutos} e ${strSegundos}`;
     }
+    
     function startSprint() {
       document.getElementById('welcome-popup').style.display = 'none';
       document.getElementById('global-clock').style.display = 'block';
@@ -562,6 +817,7 @@
       enableFields();
       document.getElementById('clickOverlay').style.display = 'none';
       document.getElementById('body-popup').style.display = 'none';
+      hideOverlay();
     }
     function handleNoSprint() {
       document.getElementById('welcome-popup').style.display = 'none';
@@ -571,15 +827,17 @@
       }, 5000);
       document.getElementById('clickOverlay').style.display = 'block';
     }
+    
     function resetSprint() {
-      // Se o PDF ainda não foi salvo, exibe o popup de aviso com efeito shake
-      if (!pdfSaved) {
-        let pdfWarning = document.getElementById('pdf-warning-popup');
-        pdfWarning.classList.add('shake');
-        pdfWarning.style.display = 'block';
-      } else {
-        window.location.reload();
-      }
+      let popup = document.getElementById('pdf-warning-popup');
+      popup.innerHTML = `
+          <p>Deseja reiniciar página, todo conteúdo preenchido será perdido?</p>
+          <div class="popup-buttons">
+            <button onclick="confirmReset()">Sim</button>
+            <button onclick="cancelReset()">Cancelar</button>
+          </div>`;
+      popup.style.display = 'block';
+      showOverlay();
     }
     function confirmReset() {
       document.getElementById('pdf-warning-popup').style.display = 'none';
@@ -588,50 +846,77 @@
     function cancelReset() {
       document.getElementById('pdf-warning-popup').style.display = 'none';
     }
-    /* Função que gera a mensagem de preview */
+    
     function gerarMensagem() {
-      let msg = `----------------- *DADOS DA BAIXA* -----------------\n`;
+      let msg = `------- *DADOS DA BAIXA* -------\n`;
       msg += `*NOME:* ${document.getElementById('pessoa').value.toUpperCase()}\n`;
       msg += `*LEAD:* ${document.getElementById('lead').value.toUpperCase()}\n`;
-      msg += `*DATA:* ${formatarData(document.getElementById('data').value).toUpperCase()}\n`;
+      msg += `*BR LÍDER:* ${document.getElementById('br1').value.toUpperCase()}\n`;
       msg += `*OT/ANE:* ${document.getElementById('ot_ane').value.toUpperCase()}\n`;
       msg += `*SGM:* ${document.getElementById('sgm').value.toUpperCase()}\n`;
-      msg += `*BA:* BA${document.getElementById('ba').value.toUpperCase()}\n`;
+      msg += `*DATA:* ${formatarData(document.getElementById('data').value).toUpperCase()}\n`;
+      msg += `*BA:* ${document.getElementById('ba').value.toUpperCase()}\n`;
       msg += `*SGD:* ${document.getElementById('sgd').value.toUpperCase()}\n`;
       msg += `*INC:* 00${document.getElementById('inc').value.toUpperCase()}\n`;
-      msg += `*APR:* 00${document.getElementById('apr').value.toUpperCase()}\n`;
-      msg += `*5RO:* 00${document.getElementById('5ro').value.toUpperCase()}\n`;
+      msg += `*DT:* ${document.getElementById('dt').value.toUpperCase()}\n`;
+      msg += `*APR DIGITAL:* ${document.getElementById('apr').value.toUpperCase()}\n`;
+      msg += `*APR MANUAL:* ${document.getElementById('apr2').value.toUpperCase()}\n`;
+      msg += `*5RO:* ${cincoROValue.toUpperCase()}\n`;
       msg += `*TRAFO:* ${document.getElementById('traf').value.toUpperCase()}\n`;
+      msg += `*TOMBAMENTO:* ${document.getElementById('Tomb').value.toUpperCase()}\n`;
       msg += `*ESTRUTURA:* ${document.getElementById('estrut').value.toUpperCase()}\n`;
       msg += `*ALIM:* ${document.getElementById('alim').value.toUpperCase()}\n`;
-      msg += `*END:* ${document.getElementById('endereco').value.toUpperCase()}\n`;
-      msg += `----------------------------------------------------\n`;
-
-      // Dados dos inputs manuais se estiverem visíveis
-      if (document.getElementById('servico').classList.contains('hidden') === false) {
-        msg += `*SERVICO REALIZADO* \n${document.getElementById('descricaoServico').value.toUpperCase()}\n\n`;
+      msg += `*ENDEREÇO:* ${document.getElementById('endereco').value.toUpperCase()}\n`;
+      msg += `*HORÁRIO INÍCIO:* ${document.getElementById('start-time').value.toUpperCase()}\n`;
+      msg += `*HORÁRIO FINAL:* ${document.getElementById('end-time').value.toUpperCase()}\n\n`;
+      msg += `------- *DESCRIÇÃO ATIVIDADE* -------\n\n`;
+      
+      // Processamento dos campos opcionais
+      if (respServico === "SIM") {
+        let desc = document.getElementById('descricaoServico').value;
+        if(desc.trim() !== "") {
+          msg += `*SERVIÇO REALIZADO*\n${desc.toUpperCase()}\n\n`;
+        }
+      } else if (respServico === "NÃO") {
+        let note = document.getElementById('descricaoServico').value;
+        if(note.trim() !== "") {
+          msg += `*SERVIÇO NÃO REALIZADO MOTIVO:*\n${note.toUpperCase()}\n\n`;
+        }
       }
-      if (document.getElementById('material').classList.contains('hidden') === false) {
-        msg += `*MATERIAL UTILIZADO* \n${document.getElementById('descricaoMaterial').value.toUpperCase()}\n\n`;
+      if (respMaterial === "SIM") {
+        let desc = document.getElementById('descricaoMaterial').value;
+        if(desc.trim() !== "") {
+          msg += `*MATERIAL UTILIZADO*\n${desc.toUpperCase()}\n\n`;
+        }
+      } else if (respMaterial === "NÃO") {
+        let note = document.getElementById('descricaoMaterial').value;
+        if(note.trim() !== "") {
+          msg += `*MATERIAL NÃO UTILIZADO MOTIVO:*\n${note.toUpperCase()}\n\n`;
+        }
       }
-      if (document.getElementById('sucata').classList.contains('hidden') === false) {
-        msg += `*DEVOLUÇÃO SUCATA GERADA* \n${document.getElementById('descricaoSucata').value.toUpperCase()}\n\n`;
+      if (respSucata === "SIM") {
+        let desc = document.getElementById('descricaoSucata').value;
+        if(desc.trim() !== "") {
+          msg += `*DEVOLUÇÃO SUCATA GERADA*\n${desc.toUpperCase()}\n\n`;
+        }
+      } else if (respSucata === "NÃO") {
+        let note = document.getElementById('descricaoSucata').value;
+        if(note.trim() !== "") {
+          msg += `*DEVOLUÇÃO SUCATA NÃO GERADA MOTIVO:*\n${note.toUpperCase()}\n\n`;
+        }
       }
-      if (document.getElementById('recurso').classList.contains('hidden') === false) {
-        msg += `*NECESSÁRIO OUTRO RECURSO?* \n${document.getElementById('descricaoRecurso').value.toUpperCase()}\n\n`;
+      if (respRecurso === "SIM") {
+        let desc = document.getElementById('descricaoRecurso').value;
+        if(desc.trim() !== "") {
+          msg += `*NECESSÁRIO OUTRO RECURSO?*\n${desc.toUpperCase()}\n\n`;
+        }
+      } else if (respRecurso === "NÃO") {
+        let note = document.getElementById('descricaoRecurso').value;
+        if(note.trim() !== "") {
+          msg += `*NECESSÁRIO OUTRO RECURSO MOTIVO:*\n${note.toUpperCase()}\n\n`;
+        }
       }
-
-      // Adiciona as notas, se houver
-      let notasMsg = "";
-      if(notas.servico) { notasMsg += "Serviço não realizado pelo seguinte motivo: " + notas.servico + "\n"; }
-      if(notas.material) { notasMsg += "Material não utilizado pelo seguinte motivo: " + notas.material + "\n"; }
-      if(notas.sucata) { notasMsg += "Devolução sucata não foi Gerada pelo seguinte motivo: " + notas.sucata + "\n"; }
-      if(notas.recurso) { notasMsg += "Não é necessário outro Recurso pelo seguinte motivo: " + notas.recurso + "\n"; }
-      if(notasMsg) { 
-        msg += "\nNOTAS:\n" + notasMsg; 
-      }
-
-      // Adiciona, por último, o tempo da sessão e a data completa
+      
       let sessionTime = "";
       if (globalTimerStart) {
         let sessionSeconds = Math.floor((Date.now() - globalTimerStart) / 1000);
@@ -639,103 +924,150 @@
       }
       let now = new Date();
       let fullDate = formatFullDateTime(now);
-      let formattedFullDate = fullDate.charAt(0).toUpperCase() + fullDate.slice(1).toLowerCase();
-
-      msg += "\n" + sessionTime + formattedFullDate;
+      msg += `${sessionTime}${fullDate}`;
+      
       document.getElementById('previewBox').textContent = msg;
     }
-    function copiarMensagem() {
-      let mensagem = document.getElementById('previewBox').textContent;
-      navigator.clipboard.writeText(mensagem).then(function() {
-        document.getElementById('popup').style.display = 'block';
-        setTimeout(() => document.getElementById('popup').style.display = 'none', 2000);
-      });
+    
+    function verificarCamposRespondidos() {
+      let missing = [];
+      let data = document.getElementById('data').value;
+      if (!data || data.trim() === "") { missing.push("📅 Data"); }
+      let pessoa = document.getElementById('pessoa').value;
+      if (!pessoa || pessoa === "NENHUM") { missing.push("👤 Nome do Componente"); }
+      let lead = document.getElementById('lead').value;
+      if (!lead || lead === "NENHUM") { missing.push("🏷️ LEAD"); }
+      let brLider = document.getElementById('br1').value;
+      if (!brLider || brLider.trim() === "") { missing.push("🆔 BR LÍDER"); }
+      let startTime = document.getElementById('start-time').value;
+      if (!startTime || startTime.trim() === "") { missing.push("🕒 Horário de Início da atividade"); }
+      let endTime = document.getElementById('end-time').value;
+      if (!endTime || endTime.trim() === "") { missing.push("🕒 Horário Final da atividade"); }
+      for (let key in fieldsAnswered) {
+        if (!fieldsAnswered[key]) {
+          if (key === "servico") { missing.push("🔧 Serviço Realizado"); }
+          else if (key === "material") { missing.push("🛠️ Material Utilizado"); }
+          else if (key === "sucata") { missing.push("♻️ Devolução Sucata Gerada"); }
+          else if (key === "recurso") { missing.push("❗ Necessário Outro Recurso"); }
+        }
+      }
+      if (missing.length > 0) {
+        let msg = "Por favor, preencha os seguintes campos obrigatórios:<br>" + missing.join("<br>");
+        let popup = document.getElementById('obrigatorio-popup');
+        popup.innerHTML = `<p>${msg}</p>
+          <div class="popup-buttons">
+            <button onclick="document.getElementById('obrigatorio-popup').style.display='none';">Fechar</button>
+          </div>`;
+        popup.style.display = 'block';
+        return false;
+      }
+      return true;
     }
-    function limparMensagem() {
-      document.getElementById('previewBox').textContent = '';
-    }
+    
     function enviarWhatsApp() {
-      const mensagem = encodeURIComponent(document.getElementById('previewBox').textContent.toUpperCase());
+      if (!verificarCamposRespondidos()) return;
+      if (!pdfSaved) {
+        let popup = document.getElementById('pdf-warning-popup');
+        popup.innerHTML = `
+              <p>Salve primeiro o PDF! Antes de encaminhar</p>
+              <div class="popup-buttons">
+                <button onclick="document.getElementById('pdf-warning-popup').style.display='none'; hideOverlay();">Fechar</button>
+              </div>`;
+        popup.style.display = 'block';
+        showOverlay();
+        return;
+      }
+      continuarWhatsApp();
+    }
+    
+    function insertColon(input) {
+      let value = input.value.replace(/[^0-9]/g, '');
+      if (value.length >= 3) {
+        value = value.slice(0, 2) + ':' + value.slice(2, 4);
+      }
+      if (value.length > 5) {
+        value = value.slice(0, 5);
+      }
+      input.value = value;
+    }
+    
+    function continuarWhatsApp() {
+      document.getElementById('pdf-warning-popup').style.display = 'none';
+      hideOverlay();
+      const mensagem = encodeURIComponent(document.getElementById('previewBox').textContent);
       const url = `https://wa.me/?text=${mensagem}`;
       window.open(url, '_blank');
-      // Se o PDF não foi salvo, exibe um lembrete
-      if (!pdfSaved) {
-        let reminder = document.getElementById('pdf-reminder-popup');
-        reminder.classList.add('shake');
-        reminder.style.display = 'block';
-        setTimeout(() => {
-          reminder.style.display = 'none';
-          reminder.classList.remove('shake');
-        }, 3000);
-      }
     }
+    function cancelarWhatsApp() {
+      document.getElementById('pdf-warning-popup').style.display = 'none';
+      hideOverlay();
+    }
+    
     function savePdf() {
-  gerarMensagem();
-  var container = document.querySelector('.container');
-  var width = container.offsetWidth;
-  var height = container.offsetHeight;
-  
-  // Recupera e prepara os valores para o nome do arquivo
-  let lead = document.getElementById('lead').value.trim();
-  let data = document.getElementById('data').value.trim();
-  let ot_ane = document.getElementById('ot_ane').value.trim();
-  let inc = document.getElementById('inc').value.trim();
-  let endereco = document.getElementById('endereco').value.trim();
-  
-  // Converte a data para o formato brasileiro dd_mm_yyyy
-  if (data !== "") {
-    let parts = data.split("-");
-    data = parts[2] + "_" + parts[1] + "_" + parts[0];
-  }
-  
-  // Substitui os espaços por underlines
-  lead = lead.replace(/\s+/g, "_");
-  ot_ane = ot_ane.replace(/\s+/g, "_");
-  inc = inc.replace(/\s+/g, "_");
-  endereco = endereco.replace(/\s+/g, "_");
-  
-  // Monta o nome do arquivo dinamicamente
-  let fileName = "Retorno_Campo_";
-  if (lead !== "") { fileName += lead; }
-  if (data !== "") { fileName += "_EM_" + data; }
-  // Usa ot_ane se estiver preenchido, senão usa inc (se preenchido)
-  if (ot_ane !== "") { fileName += "_ATRAVES_" + ot_ane; }
-  else if (inc !== "") { fileName += "_ATRAVES_" + inc; }
-  if (endereco !== "") { fileName += "_NO_ENDERECO_" + endereco; }
-  fileName += ".pdf";
-  
-  // Converte o nome do arquivo para maiúsculas
-  fileName = fileName.toUpperCase();
-  
-  html2pdf().set({
-    margin: 0,
-    filename: fileName,
-    image: { type: 'jpeg', quality: 0.99 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'px', format: [width, height], orientation: 'portrait' }
-  }).from(container).save().then(() => {
-    const pdfButton = document.getElementById('pdfButton');
-    pdfButton.textContent = 'PDF JÁ SALVO';
-    pdfButton.style.backgroundColor = '#4CAF50';
-    pdfButton.style.color = '#fff';
-    pdfButton.style.border = '1px solid #4CAF50';
-    pdfButton.disabled = true;
-    pdfSaved = true;
-  });
-}
-    /* Função para exibir o overlay e o popup de bloqueio */
+      if (!verificarCamposRespondidos()) { return; }
+      gerarMensagem();
+      let container = document.querySelector('.container');
+      let width = container.offsetWidth;
+      let height = container.offsetHeight;
+      
+      let lead = document.getElementById('lead').value.trim();
+      let data = document.getElementById('data').value.trim();
+      let ot_ane = document.getElementById('ot_ane').value.trim();
+      let inc = document.getElementById('inc').value.trim();
+      let endereco = document.getElementById('endereco').value.trim();
+      
+      if (data !== "") {
+        let parts = data.split("-");
+        data = parts[2] + "_" + parts[1] + "_" + parts[0];
+      }
+      
+      lead = lead.replace(/\s+/g, "_");
+      ot_ane = ot_ane.replace(/\s+/g, "_");
+      inc = inc.replace(/\s+/g, "_");
+      endereco = endereco.replace(/\s+/g, "_");
+      
+      let fileName = "RETORNO_CAMPO EXECUTADO_";
+      if (lead !== "") { fileName += lead; }
+      if (data !== "") { fileName += "_EM_" + data; }
+      if (ot_ane !== "") { fileName += "_ATRAVÉS_OT-ANE_" + ot_ane; }
+      else if (inc !== "") { fileName += "_ATRAVÉS_INCIDÊNCIA_" + inc; }
+      if (endereco !== "") { fileName += "_NO_ENDERECO_" + endereco; }
+      fileName += ".PDF";
+      
+      fileName = fileName.toUpperCase();
+      
+      html2pdf().set({
+        margin: 0,
+        filename: fileName,
+        image: { type: 'jpeg', quality: 0.99 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'px', format: [width, height], orientation: 'portrait' }
+      }).from(container).save().then(() => {
+        let pdfButton = document.getElementById('pdfButton');
+        pdfButton.textContent = 'PDF JÁ SALVO';
+        pdfButton.style.backgroundColor = '#4CAF50';
+        pdfButton.style.color = '#fff';
+        pdfButton.style.border = '1px solid #4CAF50';
+        pdfButton.disabled = true;
+        pdfSaved = true;
+        document.getElementById('whatsappButton').disabled = false;
+      });
+    }
+    
     document.getElementById('clickOverlay').addEventListener('click', function(e) {
       document.getElementById('body-popup').style.display = 'block';
       e.stopPropagation();
     });
+    
     function closeUpdatePopup() {
       document.getElementById('update-popup').style.display = 'none';
       document.getElementById('welcome-popup').style.display = 'block';
+      hideOverlay();
     }
-    /* --- Popup com opções para cada "Não" com confirmação padrão --- */
+    
     function showOptionsPopup(field) {
       currentOptionField = field;
-      const popup = document.getElementById('options-popup');
+      let popup = document.getElementById('options-popup');
       let options = optionsForField[field] || [];
       let customMessage = messagesForField[field] || `Selecione o motivo para não realizar execução do "${field.toUpperCase()}"`;
       let html = `<p>${customMessage}</p><div class="popup-buttons">`;
@@ -745,51 +1077,103 @@
       html += `</div>`;
       popup.innerHTML = html;
       popup.style.display = 'block';
+      showOverlay();
     }
+    
     function confirmOption(field, option, btn) {
       currentOptionButton = btn;
       btn.style.backgroundColor = "#4CAF50";
       setTimeout(() => {
         let confirmPopup = document.getElementById('confirm-popup');
+        confirmPopup.className = "popup-confirm";
         confirmPopup.innerHTML = `<p>Tem certeza que deseja inserir a opção marcada?</p>
           <div class="popup-buttons">
-            <button onclick="finalSelectOption('${field}', '${option}')">Sim</button>
-            <button onclick="cancelConfirm()">Não</button>
+            <button class="btn-sim" onclick="finalSelectOption('${field}', '${option}')">Sim</button>
+            <button class="btn-nao" onclick="cancelConfirm()">Não</button>
           </div>`;
         confirmPopup.style.display = 'block';
       }, 100);
     }
+    
     function finalSelectOption(field, option) {
       document.getElementById('confirm-popup').style.display = 'none';
       selectOption(field, option);
+      hideOverlay();
     }
+    
     function cancelConfirm() {
       document.getElementById('confirm-popup').style.display = 'none';
-      if(currentOptionButton) { currentOptionButton.style.backgroundColor = ""; }
+      if (currentOptionButton) { 
+        currentOptionButton.style.backgroundColor = "";
+      }
     }
+    
     function selectOption(field, optionText) {
       notas[field] = optionText;
+      fieldsAnswered[field] = true;
+      const container = document.getElementById(field);
+      container.classList.remove('hidden');
+      if (field === "servico") {
+        document.getElementById('descricaoServico').value = optionText;
+        respServico = "NÃO";
+      } else if (field === "material") {
+        document.getElementById('descricaoMaterial').value = optionText;
+        respMaterial = "NÃO";
+      } else if (field === "sucata") {
+        document.getElementById('descricaoSucata').value = optionText;
+        respSucata = "NÃO";
+      } else if (field === "recurso") {
+        document.getElementById('descricaoRecurso').value = optionText;
+        respRecurso = "NÃO";
+      }
       document.getElementById('options-popup').style.display = 'none';
       gerarMensagem();
     }
-    /* --- Atualização automática do preview --- */
+    
     document.addEventListener('DOMContentLoaded', () => {
-      const elementos = document.querySelectorAll('#formFields input, #formFields select, #formFields textarea');
+      let elementos = document.querySelectorAll('#formFields input, #formFields select, #formFields textarea');
       elementos.forEach(elem => {
         elem.addEventListener('input', () => { lastInteraction = Date.now(); gerarMensagem(); });
         elem.addEventListener('change', () => { lastInteraction = Date.now(); gerarMensagem(); });
       });
     });
+    
     function scheduleAutoPreviewUpdate() {
       let diff = Date.now() - lastInteraction;
       let interval = (diff < 2 * 60 * 1000) ? 2 * 60 * 1000 : 3 * 60 * 1000;
       setTimeout(() => { gerarMensagem(); scheduleAutoPreviewUpdate(); }, interval);
     }
+    
     window.onload = function() {
       disableFields();
       document.getElementById('update-popup').style.display = 'block';
       lastInteraction = Date.now();
       scheduleAutoPreviewUpdate();
+    }
+    
+    // Função para reposicionar o cursor se estiver antes do prefixo (não bloqueia o evento)
+    function enforcePrefix(e, prefix) {
+      const input = e.target;
+      setTimeout(() => {
+        if (input.selectionStart < prefix.length) {
+          input.setSelectionRange(prefix.length, prefix.length);
+        }
+      }, 0);
+    }
+    
+    // Função para corrigir o valor do campo mantendo o prefixo.
+    // Se o valor tiver tamanho menor que o prefixo, restaura o valor para o prefixo.
+    // Se o valor não começar com o prefixo, concatena o prefixo com o restante digitado.
+    function fixPrefixInput(el, prefix) {
+      let currentVal = el.value;
+      if (currentVal.length < prefix.length) {
+        el.value = prefix;
+        el.setSelectionRange(prefix.length, prefix.length);
+      } else if (!currentVal.toUpperCase().startsWith(prefix)) {
+        let withoutPrefix = currentVal.replace(new RegExp('^' + prefix, 'i'), '');
+        el.value = prefix + withoutPrefix;
+        el.setSelectionRange(prefix.length, prefix.length);
+      }
     }
   </script>
 </body>
